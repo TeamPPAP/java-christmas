@@ -7,10 +7,16 @@ import christmas.domain.discount.Discounts;
 import christmas.domain.discount.SpecialDiscount;
 import christmas.domain.discount.WeekdayDiscount;
 import christmas.domain.discount.WeekendDiscount;
+import christmas.domain.menu.Menu;
+import christmas.domain.order.Order;
 import christmas.domain.order.Orders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
+import java.util.stream.Collectors;
 
 public class EventPlannerController {
     private final InputView inputView;
@@ -34,6 +40,20 @@ public class EventPlannerController {
         // TODO 출력
     }
 
+    public Orders readOrders() {
+        System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
+        String input = inputView.readOrders();
+
+        Map<String, Integer> orderMap = parseOrders(input);
+
+        // Map을 Order 리스트로 변환
+        List<Order> orders = orderMap.entrySet().stream()
+                .map(entry -> new Order(Menu.from(entry.getKey()), entry.getValue()))
+                .toList();
+
+        return new Orders(orders);
+    }
+
     private Discounts calculateDiscounts(VisitDate visitDate, Orders orders) {
         Discounts discounts = new Discounts();
         for (DiscountPolicy policy : discountPolicies) {
@@ -44,4 +64,49 @@ public class EventPlannerController {
         }
         return discounts;
     }
+
+    public Map<String, Integer> parseOrders(String input) {
+        validateInput(input);
+
+        return Arrays.stream(input.split(","))
+                .filter(item -> !item.isBlank())  // 빈 문자열 필터링
+                .map(this::parseOrderItem)
+                .collect(Collectors.toMap(
+                        Map.Entry::getKey,
+                        Map.Entry::getValue,
+                        (existing, replacement) -> {
+                            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                        }
+                ));
+    }
+
+    private void validateInput(String input) {
+        if (input == null || input.isBlank()) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
+    }
+
+    private Map.Entry<String, Integer> parseOrderItem(String item) {
+        String[] parts = item.split("-");
+        validateOrderItemFormat(parts);
+
+        String menuName = parts[0];
+        int quantity = Integer.parseInt(parts[1]);
+        validateQuantity(quantity);
+
+        return Map.entry(menuName, quantity);
+    }
+
+    private void validateOrderItemFormat(String[] parts) {
+        if (parts.length != 2) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
+    }
+
+    private void validateQuantity(int quantity) {
+        if (quantity < 1) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+        }
+    }
+
 }
