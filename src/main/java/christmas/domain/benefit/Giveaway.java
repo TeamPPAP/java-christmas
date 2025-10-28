@@ -13,7 +13,7 @@ public class Giveaway {
     }
 
     public static Giveaway from(Orders orders) {
-        return new Giveaway(PROMOTION_EVENT_AMOUNT <= orders.calculateTotalPrice());
+        return new Giveaway(PROMOTION_EVENT_AMOUNT <= orders.calculateTotalAmount());
     }
 
     public boolean isEligible() {

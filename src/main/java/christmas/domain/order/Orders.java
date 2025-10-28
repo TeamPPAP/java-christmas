@@ -29,7 +29,7 @@ public class Orders {
      * Calculates the total price of all orders before discount.
      * @return sum of all order prices (menu price × quantity)
      */
-    public int calculateTotalPrice() {
+    public int calculateTotalAmount() {
         return orders.stream()
                 .mapToInt(Order::calculatePrice)
                 .sum();
@@ -86,7 +86,7 @@ public class Orders {
     /**
      * Validates duplicate menu entries.
      * @param orders list of orders to validate
-     * @deprecated Duplicate validation is handled at the parsing layer in Controller
+     * @deprecated Duplicate validation is handled at the parsing layer
      */
     @Deprecated
     private void validateNoDuplicateMenus(List<Order> orders) {

@@ -9,7 +9,8 @@ public class Order {
     private final int quantity;
 
     public Order(Menu menu, int quantity) {
-        // TODO: quantity 1 이상 검증
+        if (!isQuantityValid(quantity))
+            throw new IllegalArgumentException("[ERROR] Quantity must be greater than or equal to 1.");
         this.menu = menu;
         this.quantity = quantity;
     }
