@@ -2,6 +2,8 @@ package christmas.util.validator;
 
 public class DateValidator {
     private final IntegerValidator integerValidator;
+    private final int MAX_DAY = 31;
+    private final int MIN_DAY = 1;
 
     public DateValidator(IntegerValidator integerValidator) {
         this.integerValidator = integerValidator;
@@ -14,14 +16,19 @@ public class DateValidator {
         } catch (IllegalArgumentException e) {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         }
-
         validateDateRange(date);
         return date;
     }
 
     private void validateDateRange(int date) {
-        if (date < 1 || date > 31) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
+        if (date < MIN_DAY || date > MAX_DAY) {
+            throw new IllegalArgumentException(
+                    String.format("[ERROR] 유효하지 않은 날짜입니다.%d일와 %d일 사이에서 다시 입력해 주세요.", MIN_DAY, MAX_DAY));
         }
+    }
+
+    public boolean isWeekend(int date) {
+        int tmp = date % 7;
+        return tmp == 5 || tmp == 6;
     }
 }
