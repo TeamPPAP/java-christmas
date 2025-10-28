@@ -1,23 +1,34 @@
 package christmas.domain.date;
 
+import java.time.DayOfWeek;
 import java.time.LocalDate;
+import java.util.EnumSet;
 
 /**
  * 사용자의 예약을 저장하는 클래스
  */
 public record VisitDate(LocalDate date) implements Comparable<VisitDate> {
 
+    /** Definition of WEEKDAYS */
+    private static final EnumSet<DayOfWeek> WEEKDAYS =
+            EnumSet.of(DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
+                    DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY);
+
+    /** Definition of WEEKENDS */
+    private static final EnumSet<DayOfWeek> WEEKENDS =
+            EnumSet.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY);
+
     public boolean isWeekday() {
-        return date.getDayOfWeek().getValue() < 6;
+        return WEEKDAYS.contains(date.getDayOfWeek());
     }
 
     public boolean isWeekend() {
-        return date.getDayOfWeek().getValue() > 5;
+        return WEEKENDS.contains(date.getDayOfWeek());
     }
 
     @Override
     public int compareTo(VisitDate o) {
-        return o.date.compareTo(date);
+        return this.date.compareTo(o.date);
     }
 
 }

@@ -15,8 +15,7 @@ public class Order {
     }
 
     public int calculatePrice() {
-        // TODO: menu 가격 * quantity 반환
-        return 0;
+        return this.menu.getPrice() * this.quantity;
     }
 
     public Menu getMenu() {

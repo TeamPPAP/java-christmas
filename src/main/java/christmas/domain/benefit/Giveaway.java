@@ -13,7 +13,7 @@ public class Giveaway {
     }
 
     public static Giveaway from(Orders orders) {
-        return new Giveaway(PROMOTION_EVENT_AMOUNT <= orders.calculateTotalAmount());
+        return new Giveaway(PROMOTION_EVENT_AMOUNT <= orders.calculateTotalPrice());
     }
 
     public boolean isEligible() {
@@ -21,7 +21,7 @@ public class Giveaway {
     }
 
     public int getAmount() {
-        return Menu.from(Menu.CHAMPAGNE.getName()).getPrice();
+        return Menu.CHAMPAGNE.getPrice();
     }
 
 }
