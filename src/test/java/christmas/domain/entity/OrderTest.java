@@ -20,7 +20,7 @@ class OrderTest {
         Order order = new Order();
         order.parseMenuList("타파스-1,제로콜라-1");
 
-        int totalPrice = order.getTotalMenuPrice();
+        int totalPrice = order.getTotalPrice();
         Assertions.assertTrue(totalPrice > 0, totalPrice + " 원");
     }
 
