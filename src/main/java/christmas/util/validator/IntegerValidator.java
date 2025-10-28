@@ -2,13 +2,17 @@ package christmas.util.validator;
 
 public  class IntegerValidator {
 
-    public int parseNotBlankInt(String str) {
-        if (str.isBlank()) {
+    /**
+     * 빈문자열, 널 체킹 및 문자열 int형 전환
+     * @param input 입력문자열
+     * @return Int
+     * **/
+    public int parseNotBlankInt(String input) {
+        if (input.isBlank()) {
             throw new IllegalArgumentException("빈값은 입력될 수 없습니다.");
         }
-
         try {
-            return Integer.parseInt(str);
+            return Integer.parseInt(input);
         } catch (NumberFormatException e) {
             throw new IllegalArgumentException("입력값은 숫자여야 합니다.");
         }

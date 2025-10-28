@@ -14,14 +14,8 @@ public class IntegerReader implements InputReader<Integer> {
     }
 
     @Override
-    public Integer read() {
-        while (true) {
-            try {
-                String input = inputView.readLine();
-                return validator.parseNotBlankInt(input);
-            } catch (IllegalArgumentException e) {
-                System.err.println(e.getMessage());
-            }
-        }
+    public Integer read() throws IllegalArgumentException {
+        String input = inputView.readLine();
+        return validator.parseNotBlankInt(input);
     }
 }

@@ -13,13 +13,7 @@ public class StringReader implements InputReader<String> {
     }
 
     @Override
-    public String read() {
-        while (true) {
-            try {
-                return validator.notBlankString(inputView.readLine());
-            } catch (IllegalArgumentException e) {
-                System.out.println(e.getMessage());
-            }
-        }
+    public String read() throws IllegalArgumentException {
+        return validator.notBlankString(inputView.readLine());
     }
 }

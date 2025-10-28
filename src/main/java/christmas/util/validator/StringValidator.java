@@ -2,7 +2,11 @@ package christmas.util.validator;
 
 public class StringValidator {
 
-
+    /**
+     * 빈문자열, 널 체킹 및 문자열 int형 전환
+     * @param input 입력문자열
+     * @return String
+     * **/
     public String notBlankString(String input) {
         if (input == null || input.isBlank()) {
             throw new IllegalArgumentException("빈값은 입력될 수 없습니다.");
