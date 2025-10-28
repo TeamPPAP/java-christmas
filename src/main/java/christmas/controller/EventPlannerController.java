@@ -29,9 +29,9 @@ public class EventPlannerController {
     }
 
     public void run() {
-        // 입력
-        // 계산
-        // 출력
+        // TODO 입력
+        // TODO 계산
+        // TODO 출력
     }
 
     private Discounts calculateDiscounts(VisitDate visitDate, Orders orders) {

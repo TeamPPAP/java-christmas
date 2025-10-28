@@ -95,4 +95,5 @@ public class Discounts {
     public Map<String, Integer> getDiscounts() {
         return Collections.unmodifiableMap(discounts);
     }
+
 }

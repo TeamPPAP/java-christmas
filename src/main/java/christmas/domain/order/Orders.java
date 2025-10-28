@@ -6,6 +6,9 @@ import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
+
+    private static final int PROMOTION_EVENT_AMOUNT = 120_000;
+
     private final List<Order> orders;
 
     public Orders(List<Order> orders) {
@@ -42,6 +45,10 @@ public class Orders {
 
     private void validateNotOnlyBeverages(List<Order> orders) {
         // TODO: 음료만 주문했는지 검증 - 필수 (요구사항)
+    }
+
+    private boolean isPromotionAvailable() {
+        return calculateTotalAmount() >= PROMOTION_EVENT_AMOUNT;
     }
 
 }
