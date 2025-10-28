@@ -3,6 +3,7 @@ package christmas.domain.menu;
 import java.util.Arrays;
 
 public enum Menu {
+    
     MUSHROOM_SOUP("양송이수프", 6_000, MenuType.APPETIZER),
     TAPAS("타파스", 5_500, MenuType.APPETIZER),
     CAESAR_SALAD("시저샐러드", 8_000, MenuType.APPETIZER),
@@ -17,8 +18,7 @@ public enum Menu {
 
     ZERO_COLA("제로콜라", 3_000, MenuType.BEVERAGE),
     RED_WINE("레드와인", 60_000, MenuType.BEVERAGE),
-    CHAMPAGNE("샴페인", 25_000, MenuType.BEVERAGE),
-    GIFT_CHAMPAGNE("샴페인(증정)", 25_000, MenuType.BEVERAGE);
+    CHAMPAGNE("샴페인", 25_000, MenuType.BEVERAGE);
 
     private final String name;
     private final int price;
@@ -48,4 +48,5 @@ public enum Menu {
     public MenuType getType() {
         return type;
     }
+
 }

@@ -12,7 +12,6 @@ import christmas.domain.order.Order;
 import christmas.domain.order.Orders;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-
 import java.util.Arrays;
 import java.util.List;
 import java.util.Map;
@@ -41,12 +40,10 @@ public class EventPlannerController {
     }
 
     public Orders readOrders() {
-        System.out.println("주문하실 메뉴를 메뉴와 개수를 알려 주세요. (e.g. 해산물파스타-2,레드와인-1,초코케이크-1)");
         String input = inputView.readOrders();
 
         Map<String, Integer> orderMap = parseOrders(input);
 
-        // Map을 Order 리스트로 변환
         List<Order> orders = orderMap.entrySet().stream()
                 .map(entry -> new Order(Menu.from(entry.getKey()), entry.getValue()))
                 .toList();
@@ -69,7 +66,7 @@ public class EventPlannerController {
         validateInput(input);
 
         return Arrays.stream(input.split(","))
-                .filter(item -> !item.isBlank())  // 빈 문자열 필터링
+                .filter(item -> !item.isBlank())
                 .map(this::parseOrderItem)
                 .collect(Collectors.toMap(
                         Map.Entry::getKey,

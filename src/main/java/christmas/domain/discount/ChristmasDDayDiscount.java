@@ -7,14 +7,14 @@ public class ChristmasDDayDiscount implements DiscountPolicy {
 
     @Override
     public int calculateDiscount(VisitDate visitDate, Orders orders) {
-        // 1000 + (day - 1) * 100
-        return 0;
+        return 1_000 + (visitDate.date().getDayOfMonth() - 1) * 100;
     }
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        // 1 <= day <= 25
-        return false;
+        // LocalDate 타입에서 기본 값이 무조건 1 이상 이기에 검증하지 않음.
+        int day = visitDate.date().getDayOfMonth();
+        return day <= 25;
     }
 
     @Override

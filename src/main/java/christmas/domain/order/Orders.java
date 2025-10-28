@@ -1,54 +1,56 @@
 package christmas.domain.order;
 
 import christmas.domain.menu.MenuType;
-
-import java.util.ArrayList;
 import java.util.List;
 
 public class Orders {
 
-    private static final int PROMOTION_EVENT_AMOUNT = 120_000;
-
     private final List<Order> orders;
 
     public Orders(List<Order> orders) {
-        this.orders = new ArrayList<>(orders); // 불변 객체 유지를 위해 방어적 복사
-        // TODO: 중복 메뉴 검증
-        // TODO: 총 주문 개수 20개 이하 검증
-        // TODO: 음료만 주문했는지 검증
+        this.orders = List.copyOf(orders);
+        validateTotalQuantity(orders);
+        validateNotOnlyBeverages(orders);
     }
 
     public int calculateTotalAmount() {
-        // TODO: 할인 전 총 주문 금액 계산
-        return 0;
+        return orders.stream()
+                .mapToInt(Order::calculatePrice)
+                .sum();
     }
 
     public int countMenuByType(MenuType menuType) {
-        // TODO: 특정 타입 메뉴의 총 개수 계산 (할인 계산에 필요)
-        return 0;
+        return orders.stream().filter(order -> order.isMenuType(menuType))
+                .mapToInt(Order::getQuantity)
+                .sum();
     }
 
     public List<Order> getOrders() {
-        // TODO: 주문 목록 반환 (화면 출력용으로 필요할듯?)
-        // 참조값 전달로 외부 수정 방지를 위해 새 리스트에 복사
-        // 또는 unmodifiable 리스트 반환하거나 아예 스트링으로 변환해서 반환해도 좋을듯
-        return new ArrayList<>(orders);
+        return orders;
     }
 
-    private void validateNoDuplicateMenus(List<Order> orders) {
-        // TODO: 중복 메뉴 검증
-    }
+//    private void validateNoDuplicateMenus(List<Order> orders) {
+//        // TODO: 중복 메뉴 검증
+//        // 만약, 사용자가 시저 샐러드 - 1, 시저 샐러드 - 1로 입력하면 총 시저 샐러드는 2가 되어야 하기 때문에 필요한 검증 절차.
+//    }
 
     private void validateTotalQuantity(List<Order> orders) {
-        // TODO: 총 주문 개수 20개 이하 검증 - 필수 (요구사항)
+        int totalQuantity = orders.stream()
+                .mapToInt(Order::getQuantity)
+                .sum();
+
+        if (20 < totalQuantity) {
+            throw new IllegalArgumentException("[ERROR] 총 주문 개수는 20개 이하이어야 합니다.");
+        }
     }
 
     private void validateNotOnlyBeverages(List<Order> orders) {
-        // TODO: 음료만 주문했는지 검증 - 필수 (요구사항)
-    }
+        boolean allBeverages = orders.stream()
+                .allMatch(order -> order.isMenuType(MenuType.BEVERAGE));
 
-    private boolean isPromotionAvailable() {
-        return calculateTotalAmount() >= PROMOTION_EVENT_AMOUNT;
+        if (allBeverages) {
+            throw new IllegalArgumentException("[ERROR] 음식 메뉴를 최소 1개 이상 포함해야 합니다.");
+        }
     }
 
 }

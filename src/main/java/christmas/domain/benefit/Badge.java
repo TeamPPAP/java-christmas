@@ -6,9 +6,7 @@ public enum Badge {
     SANTA(20_000, "산타");
 
     Badge(int amount, String type) {
-
     }
 
     // TODO: amount에 따른 badge 종류 정해지는 기능 필요
 }
-

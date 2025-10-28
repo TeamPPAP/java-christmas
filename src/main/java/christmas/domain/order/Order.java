@@ -4,6 +4,7 @@ import christmas.domain.menu.Menu;
 import christmas.domain.menu.MenuType;
 
 public class Order {
+
     private final Menu menu;
     private final int quantity;
 
@@ -27,8 +28,7 @@ public class Order {
     }
 
     public boolean isMenuType(MenuType menuType) {
-        // TODO: 이 주문의 메뉴가 특정 타입인지 확인 (할인 계산에 필요)
-        return false;
+        return this.menu.getType().equals(menuType);
     }
 
     private boolean isQuantityValid(int quantity) {

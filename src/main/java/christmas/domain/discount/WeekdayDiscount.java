@@ -6,13 +6,13 @@ import christmas.domain.order.Orders;
 public class WeekdayDiscount implements DiscountPolicy {
     @Override
     public int calculateDiscount(VisitDate visitDate, Orders orders) {
-        // dessert count * 2025
+        // TODO dessert count * 2025
         return 0;
     }
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        // isWeekday && has dessert
+        // TODO isWeekday && has dessert
         return false;
     }
 
