@@ -17,5 +17,11 @@ public class Order {
             .collect(toList());
     }
 
+    public List<OrderDetail> getDetails() {
+        return details;
+    }
 
+    public LocalDate getOrderDate() {
+        return orderDate;
+    }
 }

@@ -35,6 +35,14 @@ public class OrderDetail {
         this.cnt = cnt;
     }
 
+    public Menu getMenu() {
+        return menu;
+    }
+
+    public int getCnt() {
+        return cnt;
+    }
+
     @Override
     public String toString() {
         return menu.getMenuName() + " " + cnt + "개";
