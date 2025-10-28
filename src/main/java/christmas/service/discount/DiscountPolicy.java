@@ -1,7 +1,7 @@
 package christmas.service.discount;
 
-public interface DiscountPolicy {
+public interface DiscountPolicy<T> {
 
-    int calculateDiscount();
+    int calculateDiscount(T type);
 
 }

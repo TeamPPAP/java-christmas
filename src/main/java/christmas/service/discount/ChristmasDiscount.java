@@ -2,16 +2,11 @@ package christmas.service.discount;
 
 import java.time.LocalDate;
 
-public class ChristmasDiscount implements DiscountPolicy {
+public class ChristmasDiscount implements DiscountPolicy<LocalDate> {
     private final LocalDate christmasDate = LocalDate.of(LocalDate.now().getYear(), 12, 25);
-    private LocalDate orderDate;
-
-    public ChristmasDiscount(LocalDate orderDate) {
-        this.orderDate = orderDate;
-    }
 
     @Override
-    public int calculateDiscount() {
+    public int calculateDiscount(LocalDate orderDate) {
         if (orderDate.isAfter(christmasDate)) {
             return 0;
         }
