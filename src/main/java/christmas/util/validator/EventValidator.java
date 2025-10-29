@@ -1,9 +1,10 @@
 package christmas.util.validator;
 
+import static christmas.domain.model.defualtAmount.DefaultAmount.DEFAULT_BASE_DISCOUNT_AMOUNT;
+
 import java.util.List;
 
 public class EventValidator {
-    private static final int DEFAULT_BASE_DISCOUNT_AMOUNT = 1000;
     /**
      * 주말이면 true 반환
      */
@@ -33,7 +34,7 @@ public class EventValidator {
      */
     public int getDefaultBaseDiscountAmount(List<Integer> datesList, int date) {
         if (datesList.contains(date)) {
-            return DEFAULT_BASE_DISCOUNT_AMOUNT;
+            return DEFAULT_BASE_DISCOUNT_AMOUNT.getAmount();
         }
         return 0;
     }

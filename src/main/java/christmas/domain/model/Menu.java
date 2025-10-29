@@ -3,7 +3,6 @@ package christmas.domain.model;
 public class Menu {
     String menuName;
     int price;
-
     Category category;
 
     public Menu(String menuName, int price, Category category) {
