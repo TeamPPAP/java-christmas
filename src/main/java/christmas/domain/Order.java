@@ -3,6 +3,7 @@ package christmas.domain;
 import java.time.LocalDate;
 import java.util.List;
 import java.util.Map;
+import java.util.stream.Collectors;
 
 import static java.util.stream.Collectors.toList;
 
@@ -27,6 +28,13 @@ public class Order {
         return details.stream()
             .mapToInt(OrderDetail::getTotalPrice)
             .sum();
+    }
+
+    @Override
+    public String toString() {
+        return details.stream()
+            .map(OrderDetail::toString)
+            .collect(Collectors.joining("\n"));
     }
 
     private List<OrderDetail> createOrderDetails(Map<String, Integer> order) {

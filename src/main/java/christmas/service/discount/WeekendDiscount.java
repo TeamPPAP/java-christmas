@@ -2,16 +2,16 @@ package christmas.service.discount;
 
 import christmas.domain.Order;
 import christmas.domain.OrderDetail;
+import christmas.service.discount.dto.DiscountResult;
 
 public class WeekendDiscount implements DiscountPolicy<Order>, DiscountCondition<Order> {
 
     @Override
-    public int calculateDiscount(Order order) {
-        int discount = 0;
+    public DiscountResult calculateDiscount(Order order) {
         if (isSatisfiedBy(order)) {
-            discount = getDessertCnt(order) * DISCOUNT_PER_MENU;
+            return new DiscountResult("주말 할인", getDessertCnt(order) * DISCOUNT_PER_MENU);
         }
-        return discount;
+        return null;
     }
 
     private int getDessertCnt(Order order) {
