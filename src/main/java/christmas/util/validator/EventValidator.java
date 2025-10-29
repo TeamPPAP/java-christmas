@@ -1,16 +1,25 @@
 package christmas.util.validator;
 
-import static christmas.domain.model.defualtAmount.DefaultAmount.DEFAULT_BASE_DISCOUNT_AMOUNT;
+import static christmas.domain.model.defualtAmount.DefaultAmount.BASE_DISCOUNT_AMOUNT;
 
+import christmas.domain.model.Category;
 import java.util.List;
 
 public class EventValidator {
+    DateValidator dateValidator;
+
+    public EventValidator(DateValidator dateValidator) {
+        this.dateValidator = dateValidator;
+    }
+
     /**
-     * 주말이면 true 반환
+     * 평일, 주말 할인 카테고리
      */
-    public boolean isWeekend(int date) {
-        int tmp = date % 7;
-        return tmp == 5 || tmp == 6;
+    public Category decideDiscountCategory(int date) {
+        if(dateValidator.isWeekend(date)){
+            return Category.MAIN_DISH;
+        }
+        return Category.DESSERT;
     }
 
     /**
@@ -34,7 +43,7 @@ public class EventValidator {
      */
     public int getDefaultBaseDiscountAmount(List<Integer> datesList, int date) {
         if (datesList.contains(date)) {
-            return DEFAULT_BASE_DISCOUNT_AMOUNT.getAmount();
+            return BASE_DISCOUNT_AMOUNT.getAmount();
         }
         return 0;
     }

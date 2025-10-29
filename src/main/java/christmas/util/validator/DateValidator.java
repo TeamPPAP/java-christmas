@@ -29,6 +29,12 @@ public class DateValidator {
                     String.format("[ERROR] 유효하지 않은 날짜입니다.%d일와 %d일 사이에서 다시 입력해 주세요.", MIN_DAY, MAX_DAY));
         }
     }
+
+    public boolean isWeekend(int date) {
+        int tmp = date % 7;
+        return tmp == 5 || tmp == 6;
+    }
+
     public boolean isDateBeforeXmas(int date) {
         return date > MIN_DAY && date < XMAS;
     }

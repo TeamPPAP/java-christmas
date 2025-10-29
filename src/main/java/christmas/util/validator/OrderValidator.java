@@ -6,7 +6,7 @@ import christmas.domain.model.Order;
 import java.util.List;
 
 public class OrderValidator {
-    private static final int MAX_TOTAL_COUNT = 20;
+    private static final int MAX_TOTAL_QUANTITY = 20;
     private final StringValidator stringValidator;
     private final IntegerValidator integerValidator;
 
@@ -66,7 +66,7 @@ public class OrderValidator {
             String[] tmp = s.split("-");
             sum += Integer.parseInt(tmp[1].trim());
         }
-        if(sum>MAX_TOTAL_COUNT){
+        if(sum> MAX_TOTAL_QUANTITY){
             throw new IllegalArgumentException("메뉴는 한 번에 최대 20개까지만 주문할 수 있습니다.");
         }
     }
