@@ -18,9 +18,8 @@ public class WeekendDiscount implements DiscountPolicy<Order> {
 
     private int getDessertCnt(Order order) {
         return order.getDetails().stream()
-                .filter(orderDetail -> orderDetail.getMenu().getMenuType() == MenuType.MAIN_MENU)
-                .mapToInt(OrderDetail::getCnt)
-                .sum();
+            .filter(orderDetail -> orderDetail.getMenu().getMenuType() == MenuType.MAIN_MENU)
+            .mapToInt(OrderDetail::getCnt)
+            .sum();
     }
-
 }

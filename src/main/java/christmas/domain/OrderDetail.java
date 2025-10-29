@@ -43,6 +43,10 @@ public class OrderDetail {
         return cnt;
     }
 
+    public int getTotalPrice() {
+        return menu.getPrice() * cnt;
+    }
+
     @Override
     public String toString() {
         return menu.getMenuName() + " " + cnt + "개";

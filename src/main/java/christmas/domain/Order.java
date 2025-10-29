@@ -24,4 +24,10 @@ public class Order {
     public LocalDate getOrderDate() {
         return orderDate;
     }
+
+    public int getTotalPrice() {
+        return details.stream()
+            .mapToInt(OrderDetail::getTotalPrice)
+            .sum();
+    }
 }
