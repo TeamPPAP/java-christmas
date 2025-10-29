@@ -5,5 +5,5 @@ public enum EventType {
     WEEKDAYS_DISCOUNT,
     WEEKENDS_DISCOUNT,
     SPECIAL_DISCOUNT,
-    GIVE_WAY
+    GIVE_WAY;
 }
