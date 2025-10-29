@@ -15,8 +15,7 @@ public class VisitDate {
             throw new IllegalArgumentException("[ERROR] 유효하지 않은 날짜입니다. 다시 입력해 주세요.");
         }
 
-        LocalDate visitDate = LocalDate.of(2025, 12, dayOfMonth);
-        this.date = visitDate;
+        this.date = LocalDate.of(2025, 12, dayOfMonth);
     }
 
     public boolean isWeekend() {
