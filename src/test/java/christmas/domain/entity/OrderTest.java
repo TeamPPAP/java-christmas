@@ -10,15 +10,14 @@ class OrderTest {
     @Test
     void parseMenuList() {
         //given
-        Order order = new Order();
-        order.parseMenuList("타파스-1,제로콜라-1");
+        Order order = new Order("타파스-1,제로콜라-1, 제로콜라-1");
+        System.out.println(order.toString());
     }
 
     @Test
     void getTotalMenuPrice() {
         //given
-        Order order = new Order();
-        order.parseMenuList("타파스-1,제로콜라-1");
+        Order order = new Order("타파스-1,제로콜라-1");
 
         int totalPrice = order.getTotalPrice();
         Assertions.assertTrue(totalPrice > 0, totalPrice + " 원");
