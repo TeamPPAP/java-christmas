@@ -7,6 +7,7 @@ public class VisitDate {
 
     private final LocalDate date;
 
+    //TODO : 유효성 체크 필요
     public VisitDate(int dayOfMonth) {
         int firstDay = 1;
         int lastDay = 31;
@@ -34,5 +35,9 @@ public class VisitDate {
     public boolean specialDay() {
         return date.isEqual(LocalDate.of(2025, 12, 25))
                 || date.getDayOfWeek() == DayOfWeek.SUNDAY;
+    }
+
+    public int getDayOfMonth() {
+        return date.getDayOfMonth();
     }
 }
