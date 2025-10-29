@@ -16,7 +16,4 @@ public class Event {
         return benefitPrice;
     }
 
-    public void setBenefitPrice(int benefitPrice) {
-        this.benefitPrice = benefitPrice;
-    }
 }

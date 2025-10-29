@@ -13,10 +13,6 @@ public class Order {
         return orderMenu;
     }
 
-    public void setOrderMenu(Menu orderMenu) {
-        this.orderMenu = orderMenu;
-    }
-
     public int getQuantity() {
         return quantity;
     }
@@ -24,7 +20,5 @@ public class Order {
     public int getOrderPrice() {
         return this.orderMenu.getPrice();
     }
-    public void setQuantity(int quantity) {
-        this.quantity = quantity;
-    }
+
 }

@@ -6,7 +6,6 @@ import christmas.repository.SpecialDayRepository;
 import christmas.util.validator.DateValidator;
 import christmas.util.validator.EventValidator;
 import christmas.util.validator.IntegerValidator;
-import christmas.view.InputView;
 
 import java.util.List;
 import java.util.concurrent.atomic.AtomicInteger;
@@ -15,7 +14,7 @@ public class EventService {
     IntegerValidator integerValidator = new IntegerValidator();
     DateValidator dateValidator = new DateValidator(integerValidator);
     EventValidator eventValidator = new EventValidator();
-    SpecialDayRepository specialDayRepository;
+    SpecialDayRepository specialDayRepository =  new SpecialDayRepository();
 
     private final int WEEKDAY_DISCOUNT_AMOUNT = 2025;
     private final int DEFAULT_BASE_DISCOUNT_AMOUNT = 1000;
@@ -55,7 +54,6 @@ public class EventService {
      * 특별 할인 금액 계산
      */
     public int specialDiscount(int date) {
-        specialDayRepository = new SpecialDayRepository();
         List<Integer> datesList = specialDayRepository.listSpecialDay();
         return eventValidator.getDefaultBaseDiscountAmount(datesList, date);
     }
