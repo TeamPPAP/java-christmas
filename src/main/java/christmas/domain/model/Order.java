@@ -21,6 +21,9 @@ public class Order {
         return quantity;
     }
 
+    public int getOrderPrice() {
+        return this.orderMenu.getPrice();
+    }
     public void setQuantity(int quantity) {
         this.quantity = quantity;
     }
