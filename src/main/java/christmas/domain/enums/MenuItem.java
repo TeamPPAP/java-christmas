@@ -42,6 +42,13 @@ public enum MenuItem {
         throw new IllegalArgumentException("존재하지 않는 메뉴입니다. : " + title);
     }
 
+    @Override
+    public String toString() {
+        return title + "(" + formatPrice() +")";
+    }
 
+    private String formatPrice(){
+        return String.format("%,d", this.price);
+    }
 }
 
