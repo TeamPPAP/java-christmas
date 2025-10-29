@@ -8,6 +8,12 @@ import static java.util.stream.Collectors.summingInt;
 
 public class CafeteriaService {
 
+    private final DiscountService discountService;
+
+    public CafeteriaService() {
+        this.discountService = new DiscountService();
+    }
+
     private Map<String, Integer> getCollect(List<String> order) {
         return order.stream()
             .map(s -> s.split("-"))

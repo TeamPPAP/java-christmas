@@ -1,17 +1,17 @@
 package christmas.service.discount;
 
-import java.time.LocalDate;
+import christmas.domain.Order;
+import christmas.domain.VisitDate;
 
-public class ChristmasDiscount implements DiscountPolicy<LocalDate> {
-
+public class ChristmasDiscount implements DiscountPolicy<Order> {
 
     @Override
-    public int calculateDiscount(LocalDate orderDate) {
-        if (orderDate.isAfter(christmasDate)) {
+    public int calculateDiscount(Order order) {
+        VisitDate date = order.getOrderDate();
+        if (date.isAfterChristmas()) {
             return 0;
         }
 
-        int dayOfMonth = orderDate.getDayOfMonth();
-        return (dayOfMonth - 1) * 100 + 1000;
+        return (date.getDay() - 1) * 100 + 1000;
     }
 }

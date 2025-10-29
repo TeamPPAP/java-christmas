@@ -1,8 +1,8 @@
 package christmas.service.gift;
 
 @FunctionalInterface
-public interface BenefitPolicy<T, R> {
+public interface BenefitPolicy<I, R> {
 
-    R apply(T type);
+    R apply(I input);
 
 }

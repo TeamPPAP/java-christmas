@@ -48,6 +48,18 @@ public enum Menu {
         return menuType;
     }
 
+    public boolean isDrink() {
+        return this.menuType == DRINKS;
+    }
+
+    public boolean isMainMenu() {
+        return this.menuType == MAIN_MENU;
+    }
+
+    public boolean isDessert() {
+        return this.menuType == DESSERT;
+    }
+
     public static Menu getByName(String menuName) {
         if (isBlank(menuName)) {
             throw new IllegalArgumentException("menuName is blank");

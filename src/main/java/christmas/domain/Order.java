@@ -8,20 +8,18 @@ import static java.util.stream.Collectors.toList;
 
 public class Order {
     private List<OrderDetail> details;
-    private LocalDate orderDate;
+    private VisitDate orderDate;
 
     public Order(Map<String, Integer> order, LocalDate orderDate) {
-        this.orderDate = orderDate;
-        this.details = order.entrySet().stream()
-            .map(entry -> new OrderDetail(entry.getKey(), entry.getValue()))
-            .collect(toList());
+        this.details = createOrderDetails(order);
+        this.orderDate = new VisitDate(orderDate);
     }
 
     public List<OrderDetail> getDetails() {
         return details;
     }
 
-    public LocalDate getOrderDate() {
+    public VisitDate getOrderDate() {
         return orderDate;
     }
 
@@ -29,5 +27,11 @@ public class Order {
         return details.stream()
             .mapToInt(OrderDetail::getTotalPrice)
             .sum();
+    }
+
+    private List<OrderDetail> createOrderDetails(Map<String, Integer> order) {
+        return order.entrySet().stream()
+            .map(entry -> new OrderDetail(entry.getKey(), entry.getValue()))
+            .collect(toList());
     }
 }
