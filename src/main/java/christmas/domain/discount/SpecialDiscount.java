@@ -7,6 +7,8 @@ import java.util.List;
 
 public class SpecialDiscount implements DiscountPolicy {
 
+    private static final int SPECIAL_DISCOUNT_AMOUNT = 1_000;
+
     private final List<LocalDate> specialDiscountDays = List.of(
             LocalDate.of(2025, 12, 7),
             LocalDate.of(2025, 12, 14),
@@ -17,7 +19,7 @@ public class SpecialDiscount implements DiscountPolicy {
 
     @Override
     public int calculateDiscount(VisitDate visitDate, Orders orders) {
-        return 1_000;
+        return SPECIAL_DISCOUNT_AMOUNT;
     }
 
     @Override

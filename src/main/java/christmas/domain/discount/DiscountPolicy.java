@@ -5,7 +5,7 @@ import christmas.domain.order.Orders;
 
 public interface DiscountPolicy {
 
-    static final int DISCOUNT_AMOUNT = 2_025;
+    int DISCOUNT_AMOUNT = 2_025;
 
     int calculateDiscount(VisitDate visitDate, Orders orders);
 
