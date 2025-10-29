@@ -4,17 +4,12 @@ import java.time.DayOfWeek;
 import java.time.LocalDate;
 import java.util.EnumSet;
 
-/**
- * 사용자의 예약을 저장하는 클래스
- */
 public record VisitDate(LocalDate date) implements Comparable<VisitDate> {
 
-    /** Definition of WEEKDAYS */
     private static final EnumSet<DayOfWeek> WEEKDAYS =
             EnumSet.of(DayOfWeek.SUNDAY, DayOfWeek.MONDAY, DayOfWeek.TUESDAY,
                     DayOfWeek.WEDNESDAY, DayOfWeek.THURSDAY);
 
-    /** Definition of WEEKENDS */
     private static final EnumSet<DayOfWeek> WEEKENDS =
             EnumSet.of(DayOfWeek.FRIDAY, DayOfWeek.SATURDAY);
 

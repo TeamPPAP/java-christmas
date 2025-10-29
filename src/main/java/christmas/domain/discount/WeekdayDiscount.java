@@ -2,7 +2,6 @@ package christmas.domain.discount;
 
 import christmas.domain.date.VisitDate;
 import christmas.domain.menu.MenuType;
-import christmas.domain.order.Order;
 import christmas.domain.order.Orders;
 
 public class WeekdayDiscount implements DiscountPolicy {
@@ -14,7 +13,7 @@ public class WeekdayDiscount implements DiscountPolicy {
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        return visitDate.isWeekday() && orders.countMenuByType(MenuType.DESSERT) > 0;
+        return visitDate.isWeekday() && (0 <= orders.countMenuByType(MenuType.DESSERT));
     }
 
     @Override

@@ -16,12 +16,12 @@ public class Giveaway {
         return new Giveaway(PROMOTION_EVENT_AMOUNT <= orders.calculateTotalAmount());
     }
 
-    public boolean isEligible() {
-        return isEligible;
-    }
+    public String getMenu() {
+        if (isEligible) {
+            return Menu.CHAMPAGNE.getName();
+        }
 
-    public int getAmount() {
-        return Menu.CHAMPAGNE.getPrice();
+        return Menu.NONE.getName();
     }
 
 }

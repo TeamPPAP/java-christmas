@@ -2,7 +2,6 @@ package christmas.domain.discount;
 
 import christmas.domain.date.VisitDate;
 import christmas.domain.order.Orders;
-
 import java.util.Collections;
 import java.util.List;
 import java.util.stream.Collectors;
@@ -26,7 +25,7 @@ public class DiscountCalculator {
     }
 
     public Discounts calculateDiscounts() {
-        if (orders.calculateTotalAmount() >= MIN_AMOUNT_FOR_DISCOUNT) {
+        if (MIN_AMOUNT_FOR_DISCOUNT <= orders.calculateTotalAmount()) {
             return new Discounts(Collections.emptyMap());
         }
         return new Discounts(

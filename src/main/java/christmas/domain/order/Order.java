@@ -9,8 +9,7 @@ public class Order {
     private final int quantity;
 
     public Order(Menu menu, int quantity) {
-        if (!isQuantityValid(quantity))
-            throw new IllegalArgumentException("[ERROR] Quantity must be greater than or equal to 1.");
+        validateQuantity(quantity);
         this.menu = menu;
         this.quantity = quantity;
     }
@@ -19,8 +18,8 @@ public class Order {
         return this.menu.getPrice() * this.quantity;
     }
 
-    public Menu getMenu() {
-        return menu;
+    public String getMenuName() {
+        return menu.getName();
     }
 
     public int getQuantity() {
@@ -31,8 +30,10 @@ public class Order {
         return this.menu.getType().equals(menuType);
     }
 
-    private boolean isQuantityValid(int quantity) {
-        return quantity >= 1;
+    private void validateQuantity(int quantity) {
+        if (quantity < 1) {
+            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문 개수입니다. 다시 입력해 주세요.");
+        }
     }
 
 }
