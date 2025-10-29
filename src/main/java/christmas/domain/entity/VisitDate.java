@@ -5,7 +5,7 @@ import java.time.LocalDate;
 
 public class VisitDate {
 
-    private LocalDate date;
+    private final LocalDate date;
 
     public VisitDate(int dayOfMonth) {
         int firstDay = 1;
