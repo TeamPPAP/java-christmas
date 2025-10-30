@@ -1,9 +1,10 @@
 package christmas.service.discount;
 
+import christmas.service.DiscountContext;
 import christmas.service.discount.dto.DiscountResult;
 
-public interface DiscountPolicy<T> {
+public interface DiscountPolicy {
 
-    DiscountResult calculateDiscount(T type);
+    DiscountResult calculateDiscount(DiscountContext context);
 
 }

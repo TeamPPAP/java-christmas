@@ -1,28 +1,26 @@
 package christmas.service.discount;
 
 import christmas.domain.Order;
-import christmas.domain.OrderDetail;
+import christmas.service.DiscountContext;
 import christmas.service.discount.dto.DiscountResult;
 
-public class WeekendDiscount implements DiscountPolicy<Order>, DiscountCondition<Order> {
+public class WeekendDiscount implements DiscountPolicy, DiscountCondition<Order> {
 
     @Override
-    public DiscountResult calculateDiscount(Order order) {
+    public DiscountResult calculateDiscount(DiscountContext context) {
+        Order order = context.order();
         if (isSatisfiedBy(order)) {
-            return new DiscountResult("주말 할인", getDessertCnt(order) * DISCOUNT_PER_MENU);
+            return DiscountResult.to("주말 할인", getMainMenuCnt(order));
         }
         return null;
     }
 
-    private int getDessertCnt(Order order) {
-        return order.getDetails().stream()
-            .filter(orderDetail -> orderDetail.getMenu().isMainMenu())
-            .mapToInt(OrderDetail::getCnt)
-            .sum();
+    private int getMainMenuCnt(Order order) {
+        return (int) order.countMainItems() * DISCOUNT_PER_MENU;
     }
 
     @Override
     public boolean isSatisfiedBy(Order order) {
-        return order.getOrderDate().isWeekend();
+        return order.getVisitDate().isWeekend() && order.isEligibleForEvent();
     }
 }

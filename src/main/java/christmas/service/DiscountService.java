@@ -1,30 +1,27 @@
 package christmas.service;
 
-import christmas.domain.Order;
+import christmas.service.discount.DiscountPolicy;
 import christmas.service.discount.dto.DiscountResult;
 import christmas.service.discount.factory.DiscountFactory;
 
+import java.util.Collections;
+import java.util.List;
 import java.util.Objects;
 import java.util.stream.Collectors;
-import java.util.stream.Stream;
 
 public class DiscountService {
 
-    public int calculateTotalDiscount(Order order) {
-        return getDiscountResultStream(order)
-            .mapToInt(DiscountResult::discountAmount)
-            .sum();
-    }
+    private final List<DiscountPolicy> policies = DiscountFactory.getInstance().getAllStrategies();
 
-    public String getBenefitDetails(Order order) {
-        return getDiscountResultStream(order).map(DiscountResult::toString)
-            .collect(Collectors.joining("\n"));
-    }
+    public List<DiscountResult> getDiscountDetails(DiscountContext context) {
+        if (!context.order().isEligibleForEvent()) {
+            return Collections.emptyList();
+        }
 
-    public Stream<DiscountResult> getDiscountResultStream(Order order) {
-        return DiscountFactory.getInstance().getAllStrategies().stream()
-            .map(discountPolicy -> discountPolicy.calculateDiscount(order))
-            .filter(Objects::nonNull);
+        return policies.stream()
+            .map(policy -> policy.calculateDiscount(context))
+            .filter(Objects::nonNull)
+            .collect(Collectors.toList());
     }
 
 }

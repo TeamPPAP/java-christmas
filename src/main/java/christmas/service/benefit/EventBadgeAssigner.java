@@ -1,6 +1,6 @@
-package christmas.service.gift;
+package christmas.service.benefit;
 
-import christmas.service.gift.value.Badge;
+import christmas.service.benefit.value.Badge;
 
 public class EventBadgeAssigner implements BenefitPolicy<Integer, Badge> {
 

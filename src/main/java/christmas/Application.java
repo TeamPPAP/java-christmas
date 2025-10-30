@@ -1,9 +1,11 @@
 package christmas;
 
-import christmas.service.CafeteriaService;
+import christmas.controller.CafeteriaController;
 
 public class Application {
+
     public static void main(String[] args) {
-        CafeteriaService cafeteriaService = new CafeteriaService();
+        CafeteriaController controller = new CafeteriaController();
+        controller.run();
     }
 }

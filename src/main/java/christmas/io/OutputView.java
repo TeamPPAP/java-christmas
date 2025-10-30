@@ -2,11 +2,14 @@ package christmas.io;
 
 import christmas.domain.Order;
 import christmas.domain.VisitDate;
-import christmas.service.gift.value.Badge;
+import christmas.service.benefit.dto.Giveaway;
+import christmas.service.benefit.value.Badge;
+import christmas.service.discount.dto.DiscountResult;
 
-import java.util.Map;
+import java.util.List;
 
 import static christmas.util.ObjectUtil.formatPrice;
+import static christmas.util.ObjectUtil.isNull;
 
 public class OutputView {
 
@@ -26,21 +29,25 @@ public class OutputView {
         System.out.println();
     }
 
-    public void printGiveaway(String giveawayItem) {
+    public void printGiveaway(Giveaway giveaway) {
         System.out.println("<증정 메뉴>");
+
+        String giveawayItem = "없음";
+        if (!isNull(giveaway)) {
+            giveawayItem = giveaway.toString();
+        }
+
         System.out.println(giveawayItem);
         System.out.println();
     }
 
-    public void printBenefitDetails(Map<String, Integer> benefitDetails) {
+    public void printBenefitDetails(List<DiscountResult> benefitDetails) {
         System.out.println("<혜택 내역>");
-        if (benefitDetails == null || benefitDetails.isEmpty()) {
+        if (isNull(benefitDetails) || benefitDetails.isEmpty()) {
             System.out.println("없음\n");
             return;
         }
-        benefitDetails.forEach((name, amount) ->
-            System.out.printf("%s: -%s%n", name, formatPrice(amount))
-        );
+        benefitDetails.forEach(System.out::println);
         System.out.println();
     }
 

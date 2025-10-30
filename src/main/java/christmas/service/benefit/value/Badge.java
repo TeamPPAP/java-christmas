@@ -1,4 +1,4 @@
-package christmas.service.gift.value;
+package christmas.service.benefit.value;
 
 import java.util.Arrays;
 import java.util.Comparator;
