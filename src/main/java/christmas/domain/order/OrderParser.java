@@ -8,6 +8,8 @@ import java.util.stream.Collectors;
 
 public class OrderParser {
 
+    private static final String INVALID_INPUT_ORDER = "[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.";
+
     public Orders readOrders(String input) {
         Map<String, Integer> orderMap = parseOrders(input);
 
@@ -28,14 +30,14 @@ public class OrderParser {
                         Map.Entry::getKey,
                         Map.Entry::getValue,
                         (existing, replacement) -> {
-                            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+                            throw new IllegalArgumentException(INVALID_INPUT_ORDER);
                         }
                 ));
     }
 
     private void validateInput(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(INVALID_INPUT_ORDER);
         }
     }
 
@@ -43,22 +45,25 @@ public class OrderParser {
         String[] parts = item.split("-");
         validateOrderItemFormat(parts);
 
-        String menuName = parts[0];
-        int quantity = Integer.parseInt(parts[1]);
-        validateQuantity(quantity);
-
-        return Map.entry(menuName, quantity);
+        try {
+            String menuName = parts[0];
+            int quantity = Integer.parseInt(parts[1]);
+            validateQuantity(quantity);
+            return Map.entry(menuName, quantity);
+        } catch (NumberFormatException e) {
+            throw new IllegalArgumentException(INVALID_INPUT_ORDER);
+        }
     }
 
     private void validateOrderItemFormat(String[] parts) {
         if (parts.length != 2) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(INVALID_INPUT_ORDER);
         }
     }
 
     private void validateQuantity(int quantity) {
         if (quantity < 1) {
-            throw new IllegalArgumentException("[ERROR] 유효하지 않은 주문입니다. 다시 입력해 주세요.");
+            throw new IllegalArgumentException(INVALID_INPUT_ORDER);
         }
     }
 

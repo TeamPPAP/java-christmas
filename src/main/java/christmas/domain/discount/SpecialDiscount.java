@@ -24,12 +24,12 @@ public class SpecialDiscount implements DiscountPolicy {
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        return specialDiscountDays.contains(visitDate.date());
+        return specialDiscountDays.contains(visitDate.getDate());
     }
 
     @Override
     public String getDiscountName() {
         return "특별 할인";
     }
-    
+
 }

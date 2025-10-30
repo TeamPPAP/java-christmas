@@ -7,7 +7,6 @@ public class Giveaway {
 
     private static final int PROMOTION_EVENT_AMOUNT = 120_000;
     private final boolean isEligible;
-    private final int quantity = 1;
 
     private Giveaway(boolean isEligible) {
         this.isEligible = isEligible;
@@ -17,11 +16,11 @@ public class Giveaway {
         return new Giveaway(PROMOTION_EVENT_AMOUNT <= orders.calculateTotalAmount());
     }
 
-    public String getMenu() {
+    public Menu getMenu() {
         if (isEligible) {
-            return Menu.CHAMPAGNE.getName();
+            return Menu.CHAMPAGNE;
         }
-        return Menu.NONE.getName();
+        return Menu.NONE;
     }
 
     public int getPrice() {
@@ -32,7 +31,10 @@ public class Giveaway {
     }
 
     public int getQuantity() {
-        return quantity;
+        if (isEligible) {
+            return 1;
+        }
+        return 0;
     }
 
     public String getBenefitName() {

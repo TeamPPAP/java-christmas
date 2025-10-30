@@ -11,12 +11,12 @@ public class ChristmasDDayDiscount implements DiscountPolicy {
 
     @Override
     public int calculateDiscount(VisitDate visitDate, Orders orders) {
-        return BASE_DISCOUNT_AMOUNT + (visitDate.date().getDayOfMonth() - 1) * ADDITIONAL_DISCOUNT_AMOUNT_PER_DAY;
+        return BASE_DISCOUNT_AMOUNT + (visitDate.getDate().getDayOfMonth() - 1) * ADDITIONAL_DISCOUNT_AMOUNT_PER_DAY;
     }
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        return visitDate.date().getDayOfMonth() <= CHRISTMAS;
+        return visitDate.getDate().getDayOfMonth() <= CHRISTMAS;
     }
 
     @Override
