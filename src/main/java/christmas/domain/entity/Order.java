@@ -35,25 +35,21 @@ public class Order {
         this.quantityByMenuItem = menuQuantityMap;
     }
 
-
     public int getTotalPrice() {
-        int totalPrice = 0;
-        for (MenuItem menuItem : quantityByMenuItem.keySet()) {
-            totalPrice += menuItem.getPrice() * quantityByMenuItem.get(menuItem);
-        }
-        return totalPrice;
+        return quantityByMenuItem.entrySet().stream()
+                .mapToInt(entry -> entry.getKey().getPrice() * entry.getValue())
+                .sum();
     }
+
+
 
     public String getOrderSummary() {
-        StringBuilder orderSummary = new StringBuilder();
-        for (MenuItem menuItem : quantityByMenuItem.keySet()) {
-            orderSummary.append(menuItem.getTitle())
-                    .append(quantityByMenuItem.get(menuItem))
-                    .append("개\n");
-        }
-
-        return orderSummary.toString();
+        return quantityByMenuItem.entrySet().stream()
+                .map(entry ->
+                        String.format("%s %d개", entry.getKey().getTitle(), entry.getValue()))
+                        .collect(Collectors.joining("\n"));
     }
+
 
     @Override
     public String toString() {
