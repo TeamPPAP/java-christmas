@@ -1,5 +1,6 @@
 package christmas.domain.entity;
 
+import christmas.domain.enums.MenuItem;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
@@ -11,6 +12,7 @@ class OrderTest {
     void parseMenuList() {
         //given
         Order order = new Order("타파스-1,제로콜라-1, 제로콜라-1");
+        order.addOrder(MenuItem.TAPAS, 4);
         System.out.println(order.toString());
     }
 
