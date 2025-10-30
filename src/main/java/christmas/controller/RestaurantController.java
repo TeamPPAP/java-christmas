@@ -1,5 +1,6 @@
 package christmas.controller;
 
+import christmas.domain.model.Badge;
 import christmas.service.DateService;
 import christmas.service.EventService;
 import christmas.service.OrderService;
@@ -14,4 +15,6 @@ public class RestaurantController {
         this.eventService = eventService;
         this.orderService = orderService;
     }
+
+
 }

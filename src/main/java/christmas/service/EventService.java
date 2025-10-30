@@ -1,17 +1,27 @@
 package christmas.service;
 
+import static christmas.domain.model.EventType.SPECIAL_DISCOUNT;
+import static christmas.domain.model.EventType.WEEKDAYS_DISCOUNT;
+import static christmas.domain.model.EventType.WEEKENDS_DISCOUNT;
+import static christmas.domain.model.EventType.XMAS_DISCOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.BASE_DISCOUNT_AMOUNT;
+import static christmas.domain.model.defualtAmount.DefaultAmount.GIFT_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.GIFT_QUALIFYING_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.STANDARD_AMOUNT;
-import static christmas.domain.model.defualtAmount.DefaultAmount.WEEKDAY_DISCOUNT_AMOUNT;
+import static christmas.domain.model.defualtAmount.DefaultAmount.WEEK_DISCOUNT_AMOUNT;
 
 import christmas.domain.model.Category;
+import christmas.domain.model.Event;
+import christmas.domain.model.EventType;
 import christmas.domain.model.Order;
+import christmas.domain.model.defualtAmount.DefaultAmount;
 import christmas.repository.EventPlanRepository;
 import christmas.util.validator.DateValidator;
 import christmas.util.validator.EventValidator;
 import christmas.util.validator.IntegerValidator;
+import java.util.ArrayList;
 import java.util.List;
+import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EventService {
@@ -19,20 +29,27 @@ public class EventService {
     DateValidator dateValidator;
     EventValidator eventValidator;
     EventPlanRepository eventPlanRepo;
+    OrderService orderService;
 
     public EventService(IntegerValidator integerValidator, DateValidator dateValidator, EventValidator eventValidator,
-                        EventPlanRepository eventPlanRepo) {
+                        EventPlanRepository eventPlanRepo, OrderService orderService) {
         this.integerValidator = integerValidator;
         this.dateValidator = dateValidator;
         this.eventValidator = eventValidator;
         this.eventPlanRepo = eventPlanRepo;
+        this.orderService = orderService;
     }
+
     //테스트용 생성자
     public EventService() {
         this.integerValidator = new IntegerValidator();
         this.dateValidator = new DateValidator(integerValidator);
         this.eventValidator = new EventValidator(dateValidator);
         this.eventPlanRepo = new EventPlanRepository();
+    }
+
+    public List<Integer> getSpecialDayList() {
+        return eventPlanRepo.listSpecialDay();
     }
 
     /**
@@ -55,13 +72,12 @@ public class EventService {
     public int weekDiscount(List<Order> orders, int date) {
         AtomicInteger qty = new AtomicInteger(0);
         Category category = eventValidator.decideDiscountCategory(date);
-
         orders.forEach(order -> {
             if (category == order.getOrderMenu().getCategory()) {
                 qty.set(qty.get() + order.getQuantity());
             }
         });
-        return qty.get() * WEEKDAY_DISCOUNT_AMOUNT.getAmount();
+        return qty.get() * WEEK_DISCOUNT_AMOUNT.getAmount();
     }
 
     /**
@@ -73,7 +89,7 @@ public class EventService {
     }
 
     /**
-     * 증정을 위한 총 주문 금액 계산
+     * 증정을 위한 총 주문 금액 계산 - 샴페인 증정 대상 확인
      */
     public boolean isCalAmountForGift(List<Order> orders) {
         AtomicInteger total = new AtomicInteger(0);
@@ -86,12 +102,85 @@ public class EventService {
     /**
      * 총 혜택 금액 계산 (모든 할인 금액 합계 + 증정 메뉴 가격
      */
-    /*public int totalBenefitAmount(List<Order> orders, int date) {
-        isCalAmountForEvent(orders);
-        dDayDiscount(date);
-        weekDiscount(orders, date)
-        specialDiscount()
-        isCalAmountForGift()
+    public int totalBenefitAmount(List<Order> orders, int date) {
+        return benefitVerifiedDate(orders,date).stream().mapToInt(Event::getBenefitPrice).sum();
     }
-*/
+
+    private int verifiedGiftAmount(List<Order> orders) {
+        if (isCalAmountForGift(orders)) {
+            return GIFT_AMOUNT.getAmount();
+        }
+        return 0;
+    }
+
+    /**
+     * Event객체에 값 주입
+     *
+     */
+    public List<Event> benefitVerifiedDate(List<Order> orders, int date) {
+        List<Event> events = new ArrayList<>();
+        List<Integer> datesList = getSpecialDayList();
+
+        if (isCalAmountForEvent(orders)) {
+            addWeekEventToList(orders, date).ifPresent(events::add);
+            addBeforeXmasDDayToList(date).ifPresent(events::add);
+            addSpecialDayToList(date, datesList).ifPresent(events::add);
+            addGiftToEventList(orders).ifPresent(events::add);
+        }
+        return events;
+    }
+
+    /**
+     * 평일,주말 할인 여부 판단 및 적용 시 할인 가격 Event 객체 생성
+     *
+     */
+    private Optional<Event> addWeekEventToList(List<Order> orders, int date) {
+        EventType eventType = isWeekend(date);
+        return Optional.of(new Event(eventType, weekDiscount(orders, date)));
+    }
+
+    /**
+     * 크리스마스 디데이 할인 적용여부 판단 및 적용 시 할인 가격 Event 객체 생성
+     *
+     */
+    private Optional<Event> addBeforeXmasDDayToList(int date) {
+        if (eventValidator.isDateBeforeXmas(date)) {
+            return Optional.of(new Event(XMAS_DISCOUNT, dDayDiscount(date)));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * 별표시 이벤트 적용여부 판단 및 적용 시 할인 가격 Event 객체 생성
+     *
+     */
+    private Optional<Event> addSpecialDayToList(int date, List<Integer> datesList) {
+        if (eventValidator.isSpecialDay(datesList, date)) {
+            return Optional.of(new Event(SPECIAL_DISCOUNT, specialDiscount(date)));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * 증정품 조건 만족시 이벤트 리스트에 증정이벤트 추가
+     *
+     */
+    private Optional<Event> addGiftToEventList(List<Order> orders) {
+        if (eventValidator.isGift(orderService.totalOrderPrice(orders))) {
+            return Optional.of(new Event(EventType.GIVE_GIFT, DefaultAmount.GIFT_AMOUNT.getAmount()));
+        }
+        return Optional.empty();
+    }
+
+    /**
+     * 주말 판단/EventType반환
+     *
+     */
+    private EventType isWeekend(int date) {
+        if (eventValidator.isWeekend(date)) {
+            return WEEKENDS_DISCOUNT;
+        }
+        return WEEKDAYS_DISCOUNT;
+    }
+
 }

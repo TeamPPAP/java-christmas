@@ -4,6 +4,11 @@ public class Event {
     EventType eventName;
     int benefitPrice;
 
+    public Event(EventType eventName, int benefitPrice) {
+        this.eventName = eventName;
+        this.benefitPrice = benefitPrice;
+    }
+
     public EventType getEventName() {
         return eventName;
     }

@@ -21,9 +21,9 @@ public class Application {
         DateValidator dateValidator = new DateValidator(integerValidator);
         EventValidator eventValidator = new EventValidator(dateValidator);
 
-        OrderService orderService = new OrderService(new MenuRepository());
+        OrderService orderService = new OrderService(new MenuRepository(),new EventService());
         DateService dateService = new DateService(new EventPlanRepository());
-        EventService eventService = new EventService(integerValidator,dateValidator,eventValidator,eventPlanRepository);
+        EventService eventService = new EventService(integerValidator,dateValidator,eventValidator,eventPlanRepository,orderService);
 
         RestaurantController controller = new RestaurantController(dateService,eventService,orderService);
     }

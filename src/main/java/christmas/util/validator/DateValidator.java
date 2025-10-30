@@ -5,7 +5,6 @@ import java.util.List;
 public class DateValidator {
     private final IntegerValidator integerValidator;
     private final int MAX_DAY = 31;
-    private final int XMAS = 25;
     private final int MIN_DAY = 1;
 
     public DateValidator(IntegerValidator integerValidator) {
@@ -30,12 +29,5 @@ public class DateValidator {
         }
     }
 
-    public boolean isWeekend(int date) {
-        int tmp = date % 7;
-        return tmp == 5 || tmp == 6;
-    }
 
-    public boolean isDateBeforeXmas(int date) {
-        return date > MIN_DAY && date < XMAS;
-    }
 }
