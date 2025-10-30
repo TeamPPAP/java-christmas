@@ -6,10 +6,6 @@ import christmas.service.benefit.value.Badge;
 import christmas.service.discount.dto.DiscountResult;
 
 import java.util.List;
-import java.util.Map;
-
-import static java.util.stream.Collectors.groupingBy;
-import static java.util.stream.Collectors.summingInt;
 
 public class CafeteriaService {
 
@@ -19,15 +15,6 @@ public class CafeteriaService {
     public CafeteriaService() {
         this.discountService = new DiscountService();
         this.benefitService = new BenefitService();
-    }
-
-    public Map<String, Integer> getCollect(List<String> order) {
-        return order.stream()
-            .map(s -> s.split("-"))
-            .collect(groupingBy(
-                s -> s[0],
-                summingInt(s -> Integer.parseInt(s[1]))
-            ));
     }
 
     public List<DiscountResult> getTotalDiscountList(Order order) {

@@ -1,11 +1,7 @@
 package christmas.domain;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 import java.util.stream.Collectors;
-
-import static java.util.stream.Collectors.toList;
 
 public class Order {
     private List<OrderDetail> details;
@@ -13,15 +9,11 @@ public class Order {
     private boolean isAllDrinks = false;
     private int totalPrice = 0;
 
-    public Order(Map<String, Integer> order, LocalDate visitDate) {
-        List<OrderDetail> orderDetails = createOrderDetails(order);
-        if (orderDetails.isEmpty() || orderDetails.size() > 20) {
-            throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
-        }
-        this.details = orderDetails;
-        this.visitDate = new VisitDate(visitDate);
-        this.totalPrice = createTotalPrice(orderDetails);
-        this.isAllDrinks = checkAllDrinks(orderDetails);
+    public Order(List<OrderDetail> details, VisitDate visitDate) {
+        this.details = details;
+        this.visitDate = visitDate;
+        this.totalPrice = createTotalPrice(details);
+        this.isAllDrinks = checkAllDrinks(details);
     }
 
     public List<OrderDetail> getDetails() {
@@ -57,12 +49,6 @@ public class Order {
         return details.stream()
             .map(OrderDetail::toString)
             .collect(Collectors.joining("\n"));
-    }
-
-    private List<OrderDetail> createOrderDetails(Map<String, Integer> order) {
-        return order.entrySet().stream()
-            .map(entry -> new OrderDetail(entry.getKey(), entry.getValue()))
-            .collect(toList());
     }
 
     private int createTotalPrice(List<OrderDetail> details) {

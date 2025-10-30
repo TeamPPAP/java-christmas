@@ -1,6 +1,8 @@
 package christmas.controller;
 
 import christmas.domain.Order;
+import christmas.domain.OrderDetail;
+import christmas.domain.VisitDate;
 import christmas.io.InputView;
 import christmas.io.OutputView;
 import christmas.service.CafeteriaService;
@@ -8,9 +10,7 @@ import christmas.service.benefit.dto.Giveaway;
 import christmas.service.benefit.value.Badge;
 import christmas.service.discount.dto.DiscountResult;
 
-import java.time.LocalDate;
 import java.util.List;
-import java.util.Map;
 
 public class CafeteriaController {
     private final CafeteriaService cafeteriaService;
@@ -24,11 +24,10 @@ public class CafeteriaController {
     }
 
     public void run() {
-        LocalDate localDate = inputView.readDate();
-        List<String> menus = inputView.readMenu();
-        Map<String, Integer> collect = cafeteriaService.getCollect(menus);
+        VisitDate date = inputView.readDate();
+        List<OrderDetail> orderDetails = inputView.readMenu();
+        Order order = new Order(orderDetails, date);
 
-        Order order = new Order(collect, localDate);
         outputView.printEventPreviewTitle(order.getVisitDate());
         outputView.printOrderItems(order);
 
