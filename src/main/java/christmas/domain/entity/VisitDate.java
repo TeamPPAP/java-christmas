@@ -32,7 +32,11 @@ public class VisitDate {
         return date.isBefore(LocalDate.of(2025, 12, 26));
     }
 
-    public boolean specialDay() {
+    public boolean isDuringPeriod(LocalDate startDate, LocalDate endDate) {
+        return ( !this.date.isBefore(startDate) ) && ( !this.date.isAfter(endDate) );
+    }
+
+    public boolean isSpecialDay() {
         return date.isEqual(LocalDate.of(2025, 12, 25))
                 || date.getDayOfWeek() == DayOfWeek.SUNDAY;
     }

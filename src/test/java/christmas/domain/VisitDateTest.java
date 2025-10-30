@@ -4,6 +4,8 @@ import christmas.domain.entity.VisitDate;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 
+import java.time.LocalDate;
+
 class VisitDateTest {
 
     @Test
@@ -21,6 +23,17 @@ class VisitDateTest {
     @Test
     void isWeekDay() {
 
+    }
+
+    @Test
+    void isDuringPeriod() {
+        int date = 1;
+        VisitDate visitDate = new VisitDate(date);
+
+        boolean result = visitDate.isDuringPeriod(LocalDate.of(2025, 12, 1)
+                , LocalDate.of(2025, 12, 31));
+
+        Assertions.assertTrue(result, visitDate.toString() + "은 12월 내에 있어야합니다.");
     }
 
     @Test
