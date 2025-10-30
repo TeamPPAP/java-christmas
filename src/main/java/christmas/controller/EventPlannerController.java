@@ -2,9 +2,12 @@ package christmas.controller;
 
 import christmas.domain.entity.Order;
 import christmas.domain.entity.VisitDate;
+import christmas.domain.event.Event;
 import christmas.service.EventPlannerService;
 import christmas.view.InputView;
 import christmas.view.OutputView;
+
+import java.util.Arrays;
 
 public class EventPlannerController {
     EventPlannerService service = new EventPlannerService();
@@ -26,6 +29,7 @@ public class EventPlannerController {
 
         outputView.printTotalBeforeDiscount(order.getTotalPrice());
 
+        outputView.printEvent(visitDate, order);
 
     }
 
