@@ -1,8 +1,8 @@
 package christmas.domain.model;
 
 public class Order {
-    Menu orderMenu;
-    int quantity;
+    private final Menu orderMenu;
+    private final int quantity;
 
     public Order(Menu order, int quantity) {
         this.orderMenu = order;

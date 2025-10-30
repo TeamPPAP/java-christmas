@@ -1,14 +1,11 @@
 package christmas.service;
 
-import static christmas.domain.model.EventType.SPECIAL_DISCOUNT;
-import static christmas.domain.model.EventType.WEEKDAYS_DISCOUNT;
-import static christmas.domain.model.EventType.WEEKENDS_DISCOUNT;
-import static christmas.domain.model.EventType.XMAS_DISCOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.BASE_DISCOUNT_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.GIFT_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.GIFT_QUALIFYING_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.STANDARD_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.WEEK_DISCOUNT_AMOUNT;
+import static christmas.domain.model.EventType.*;
 
 import christmas.domain.model.Category;
 import christmas.domain.model.Event;
@@ -16,36 +13,22 @@ import christmas.domain.model.EventType;
 import christmas.domain.model.Order;
 import christmas.domain.model.defualtAmount.DefaultAmount;
 import christmas.repository.EventPlanRepository;
-import christmas.util.validator.DateValidator;
 import christmas.util.validator.EventValidator;
-import christmas.util.validator.IntegerValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EventService {
-    IntegerValidator integerValidator;
-    DateValidator dateValidator;
-    EventValidator eventValidator;
-    EventPlanRepository eventPlanRepo;
-    OrderService orderService;
+    private final EventValidator eventValidator;
+    private final EventPlanRepository eventPlanRepo;
+    private final OrderService orderService;
 
-    public EventService(IntegerValidator integerValidator, DateValidator dateValidator, EventValidator eventValidator,
+    public EventService(EventValidator eventValidator,
                         EventPlanRepository eventPlanRepo, OrderService orderService) {
-        this.integerValidator = integerValidator;
-        this.dateValidator = dateValidator;
         this.eventValidator = eventValidator;
         this.eventPlanRepo = eventPlanRepo;
         this.orderService = orderService;
-    }
-
-    //테스트용 생성자
-    public EventService() {
-        this.integerValidator = new IntegerValidator();
-        this.dateValidator = new DateValidator(integerValidator);
-        this.eventValidator = new EventValidator(dateValidator);
-        this.eventPlanRepo = new EventPlanRepository();
     }
 
     public List<Integer> getSpecialDayList() {
@@ -56,7 +39,7 @@ public class EventService {
      * 이벤트 적용 여부 판단 (총주문 금액 10,000원 이상)
      */
     public boolean isCalAmountForEvent(List<Order> orders) {
-        return STANDARD_AMOUNT.getAmount() <= orders.stream().mapToInt(Order::getOrderPrice).sum();
+        return STANDARD_AMOUNT.getAmount() <= orderService.totalOrderPrice(orders);
     }
 
     /**
@@ -92,11 +75,7 @@ public class EventService {
      * 증정을 위한 총 주문 금액 계산 - 샴페인 증정 대상 확인
      */
     public boolean isCalAmountForGift(List<Order> orders) {
-        AtomicInteger total = new AtomicInteger(0);
-        orders.forEach(order -> {
-            total.set(total.get() + (order.getQuantity() * order.getOrderMenu().getPrice()));
-        });
-        return GIFT_QUALIFYING_AMOUNT.getAmount() <= total.get();
+        return GIFT_QUALIFYING_AMOUNT.getAmount() <= orderService.totalOrderPrice(orders);
     }
 
     /**
@@ -182,5 +161,10 @@ public class EventService {
         }
         return WEEKDAYS_DISCOUNT;
     }
-
+    /**
+     * 할인 후 예상 결제 금액
+     * */
+    public int calFinalAmount(List<Order> orders,int date){
+        return orderService.totalOrderPrice(orders) - totalBenefitAmount(orders,date) + GIFT_AMOUNT.getAmount();
+    }
 }

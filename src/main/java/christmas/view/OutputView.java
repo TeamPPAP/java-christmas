@@ -6,10 +6,8 @@ import christmas.service.MenuService;
 import java.util.List;
 
 public class OutputView {
-    MenuService menuService;
 
-    public OutputView(MenuService menuService) {
-        this.menuService = menuService;
+    public OutputView() {
     }
 
     public void printGreeting() {

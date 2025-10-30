@@ -1,5 +1,5 @@
 package christmas.util.validator;
-
+import static christmas.domain.model.message.ErrorMessage.*;
 public class StringValidator {
 
     /**
@@ -9,18 +9,18 @@ public class StringValidator {
      * **/
     public String notBlankString(String input) {
         if (input == null || input.isBlank()) {
-            throw new IllegalArgumentException("빈값은 입력될 수 없습니다.");
+            throw new IllegalArgumentException(EMPTY_INPUT.getMessage());
         }
         return input.trim();
     }
 
     public void notSpecialCharacterString(String input) {
         if (!input.matches("^[가-힣ㄱ-ㅎㅏ-ㅣa-zA-Z0-9\\s]+$")) {
-            throw new IllegalArgumentException("특수문자는 사용할 수 없습니다.");        }
+            throw new IllegalArgumentException(INVALID_CHARACTER.getMessage());        }
     }
     public void ensureCompleteString(String input) {
         if (input.matches("^[ㄱ-ㅎ]+$")) {
-            throw new IllegalArgumentException("완성된 한글 글자만 입력할 수 있습니다");
+            throw new IllegalArgumentException(NOT_COMPLETE_KOREAN.getMessage());
         }
     }
 }

@@ -4,7 +4,6 @@ import christmas.util.validator.IntegerValidator;
 import christmas.view.InputView;
 
 public class IntegerReader implements InputReader<Integer> {
-
     private final IntegerValidator validator;
     private final InputView inputView;
 

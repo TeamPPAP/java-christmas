@@ -5,7 +5,7 @@ import christmas.repository.MenuRepository;
 import java.util.List;
 
 public class MenuService {
-    MenuRepository menuRepo;
+    private final MenuRepository menuRepo;
 
     public MenuService(MenuRepository menuRepo) {
         this.menuRepo = menuRepo;

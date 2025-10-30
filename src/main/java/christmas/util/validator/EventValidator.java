@@ -1,16 +1,15 @@
 package christmas.util.validator;
 
+import static christmas.domain.model.constant.FinalConstant.*;
 import static christmas.domain.model.defualtAmount.DefaultAmount.BASE_DISCOUNT_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.GIFT_QUALIFYING_AMOUNT;
 
 import christmas.domain.model.Category;
-import christmas.domain.model.EventType;
+
 import java.util.List;
 
 public class EventValidator {
-    private final int XMAS = 25;
-    private final int MIN_DAY = 1;
-    DateValidator dateValidator;
+    private final DateValidator dateValidator;
 
     public EventValidator(DateValidator dateValidator) {
         this.dateValidator = dateValidator;
@@ -31,7 +30,7 @@ public class EventValidator {
      */
     public boolean isSpecial(int date) {
         int tmp = date % 7;
-        return tmp == 0 || date == 25;
+        return tmp == 0 || date == XMAS.get();
     }
 
     /**
@@ -56,10 +55,7 @@ public class EventValidator {
      *
      */
     public boolean isSpecialDay(List<Integer> datesList, int date) {
-        if (datesList.contains(date)) {
-            return true;
-        }
-        return false;
+        return datesList.contains(date);
     }
 
     /**
@@ -67,10 +63,7 @@ public class EventValidator {
      *
      */
     public boolean isGift(int amount) {
-        if (amount >= GIFT_QUALIFYING_AMOUNT.getAmount()) {
-            return true;
-        }
-        return false;
+        return amount >= GIFT_QUALIFYING_AMOUNT.getAmount();
     }
 
     /**
@@ -78,7 +71,7 @@ public class EventValidator {
      *
      */
     public boolean isDateBeforeXmas(int date) {
-        return date > MIN_DAY && date < XMAS;
+        return date >= MIN_DAY.get() && date <= XMAS.get();
     }
 
     /**

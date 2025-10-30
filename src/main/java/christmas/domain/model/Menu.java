@@ -1,9 +1,9 @@
 package christmas.domain.model;
 
 public class Menu {
-    String menuName;
-    int price;
-    Category category;
+    public final String menuName;
+    public final int price;
+    public final Category category;
 
     public Menu(String menuName, int price, Category category) {
         this.menuName = menuName;

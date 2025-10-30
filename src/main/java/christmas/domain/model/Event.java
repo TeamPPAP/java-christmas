@@ -1,8 +1,8 @@
 package christmas.domain.model;
 
 public class Event {
-    EventType eventName;
-    int benefitPrice;
+    public final EventType eventName;
+    public final int benefitPrice;
 
     public Event(EventType eventName, int benefitPrice) {
         this.eventName = eventName;
@@ -13,12 +13,7 @@ public class Event {
         return eventName;
     }
 
-    public void setEventName(EventType eventName) {
-        this.eventName = eventName;
-    }
-
     public int getBenefitPrice() {
         return benefitPrice;
     }
-
 }
