@@ -16,8 +16,7 @@ public class ChristmasDDayDiscount implements DiscountPolicy {
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        int day = visitDate.date().getDayOfMonth();
-        return day <= CHRISTMAS;
+        return visitDate.date().getDayOfMonth() <= CHRISTMAS;
     }
 
     @Override

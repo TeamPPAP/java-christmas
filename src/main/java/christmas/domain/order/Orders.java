@@ -5,8 +5,8 @@ import java.util.List;
 
 public class Orders {
 
-    private static final int MAX_QUANTITY = 20;
-    
+    private static final int MAX_ORDER_QUANTITY = 20;
+
     private final List<Order> orders;
 
     public Orders(List<Order> orders) {
@@ -36,7 +36,7 @@ public class Orders {
                 .mapToInt(Order::getQuantity)
                 .sum();
 
-        if (MAX_QUANTITY < totalQuantity) {
+        if (MAX_ORDER_QUANTITY < totalQuantity) {
             throw new IllegalArgumentException("[ERROR] 총 주문 개수는 20개 이하이어야 합니다.");
         }
     }

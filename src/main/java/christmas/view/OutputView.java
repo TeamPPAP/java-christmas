@@ -33,23 +33,24 @@ public class OutputView {
     public void printGiveaway(Giveaway giveaway) {
         System.out.println();
         System.out.println("<증정 메뉴>");
-        System.out.println(giveaway.getMenu());
+        System.out.printf("%s %d개%n", giveaway.getMenu(), giveaway.getQuantity());
     }
 
-    public void printBenefits(Discounts discounts) {
+    public void printBenefits(Discounts discounts, Giveaway giveaway) {
         System.out.println();
         System.out.println("<혜택 내역>");
         discounts.discounts().forEach(
                 (key, value) -> System.out.printf("%s -%,d원%n", key, value));
+        System.out.printf("%s -%,d원%n", giveaway.getBenefitName(), giveaway.getPrice());
     }
 
-    public void printTotalBenefitAmount(Discounts discounts) {
+    public void printTotalBenefitAmount(Discounts discounts, Giveaway giveaway) {
         System.out.println();
         System.out.println("<총 혜택 금액>");
-        System.out.printf("-%,d원%n", discounts.getTotalAmount());
+        System.out.printf("-%,d원%n", discounts.getTotalAmount() + giveaway.getPrice());
     }
 
-    public void printFinalAmount(Orders orders, Discounts discounts) {
+    public void printFinalAmount(Orders orders, Discounts discounts, Giveaway giveaway) {
         System.out.println();
         System.out.println("<할인 후 예상 결제 금액>");
         System.out.printf("%,d원%n", orders.calculateTotalAmount() - discounts.getTotalAmount());

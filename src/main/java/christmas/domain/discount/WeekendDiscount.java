@@ -13,7 +13,7 @@ public class WeekendDiscount implements DiscountPolicy {
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Orders orders) {
-        return visitDate.isWeekend() && (0 <= orders.countMenuByType(MenuType.MAIN));
+        return visitDate.isWeekend() && (0 < orders.countMenuByType(MenuType.MAIN));
     }
 
     @Override

@@ -25,7 +25,7 @@ public class DiscountCalculator {
     }
 
     public Discounts calculateDiscounts() {
-        if (MIN_AMOUNT_FOR_DISCOUNT <= orders.calculateTotalAmount()) {
+        if (orders.calculateTotalAmount() < MIN_AMOUNT_FOR_DISCOUNT) {
             return new Discounts(Collections.emptyMap());
         }
         return new Discounts(
