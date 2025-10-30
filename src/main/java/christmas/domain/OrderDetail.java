@@ -39,9 +39,9 @@ public class OrderDetail {
         return menu.getMenuName() + " " + cnt + "개";
     }
 
-    public static List<OrderDetail> createOrderDetail(List<String> order) {
+    public static List<OrderDetail> createOrderDetails(List<String> order) {
         List<OrderDetail> orderDetails = create(getCollect(order));
-        if (orderDetails.isEmpty() || orderDetails.size() > 20) {
+        if (orderDetails.isEmpty() || isTotalQuantityExceededLimit(orderDetails)) {
             throw new IllegalArgumentException("유효하지 않은 주문입니다. 다시 입력해 주세요.");
         }
         return orderDetails;
@@ -61,6 +61,10 @@ public class OrderDetail {
         return order.entrySet().stream()
             .map(entry -> new OrderDetail(entry.getKey(), entry.getValue()))
             .collect(toList());
+    }
+
+    private static boolean isTotalQuantityExceededLimit(List<OrderDetail> details) {
+        return details.stream().mapToInt(OrderDetail::getCnt).sum() > 20;
     }
 
 }

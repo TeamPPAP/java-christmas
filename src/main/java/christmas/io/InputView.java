@@ -24,7 +24,7 @@ public class InputView {
                 isNotDigitThanThrow(input);
 
                 return new VisitDate(input);
-            } catch (Exception e) {
+            } catch (IllegalArgumentException e) {
                 ExceptionHandler.handle(e);
             }
         }
@@ -39,9 +39,10 @@ public class InputView {
                 isValidAnswer(input);
                 isRightOrderFormat(input);
                 List<String> split = List.of(split(input, ","));
-                return OrderDetail.createOrderDetail(split);
-            } catch (Exception e) {
+                return OrderDetail.createOrderDetails(split);
+            } catch (IllegalArgumentException e) {
                 ExceptionHandler.handle(e);
+                System.out.println();
             }
         }
     }

@@ -24,29 +24,52 @@ public class CafeteriaController {
     }
 
     public void run() {
+        Order order = order();
+        printOrders(order);
+
+        List<DiscountResult> discountResults = discountOrders(order);
+        int totalBenefitAmount = calculateAndPrintTotalDiscountAmount(discountResults);
+
+        calculateFinalPayment(order, totalBenefitAmount);
+        getBadge(totalBenefitAmount);
+    }
+
+    private Order order() {
         VisitDate date = inputView.readDate();
         List<OrderDetail> orderDetails = inputView.readMenu();
-        Order order = new Order(orderDetails, date);
+        return new Order(orderDetails, date);
+    }
 
+    private void printOrders(Order order) {
         outputView.printEventPreviewTitle(order.getVisitDate());
         outputView.printOrderItems(order);
 
         outputView.printTotalAmountBeforeDiscount(order.getTotalPrice());
+    }
 
+    private List<DiscountResult> discountOrders(Order order) {
         Giveaway giveawayMenu = cafeteriaService.getGiveawayMenu(order);
         outputView.printGiveaway(giveawayMenu);
 
         List<DiscountResult> totalDiscountList = cafeteriaService.getTotalDiscountList(order);
         outputView.printBenefitDetails(totalDiscountList);
+        return totalDiscountList;
+    }
 
-        int totalBenefitAmount = totalDiscountList.stream()
+    private int calculateAndPrintTotalDiscountAmount(List<DiscountResult> results) {
+        int totalBenefitAmount = results.stream()
             .mapToInt(DiscountResult::discountAmount)
             .sum();
         outputView.printTotalBenefitAmount(totalBenefitAmount);
+        return totalBenefitAmount;
+    }
 
+    private void calculateFinalPayment(Order order, int totalBenefitAmount) {
         int finalPayment = order.getTotalPrice() - totalBenefitAmount;
         outputView.printFinalPayment(finalPayment);
+    }
 
+    public void getBadge(int totalBenefitAmount) {
         Badge eventBadge = cafeteriaService.getEventBadge(totalBenefitAmount);
         outputView.printEventBadge(eventBadge);
     }
