@@ -1,5 +1,12 @@
 package christmas.view;
 
+import christmas.domain.entity.Order;
+import christmas.domain.entity.VisitDate;
+import christmas.domain.event.Event;
+import christmas.domain.event.EventDetail;
+
+import java.util.Arrays;
+
 public class OutputView {
 
     public void printWelcomeMessage() {
@@ -25,5 +32,20 @@ public class OutputView {
     public void printTotalBeforeDiscount(int totalBeforeDiscount) {
         System.out.println("<할인 전 총주문 금액>\n"
                 + String.format("%,d", totalBeforeDiscount) + "원\n");
+    }
+
+    public void printEventDetails(EventDetail eventDetail) {
+        System.out.println(eventDetail.toString());
+    }
+
+    public void printEvent(VisitDate visitDate, Order order) {
+        System.out.println("<혜택 내역>");
+        Arrays.stream(Event.values())
+                .map(event -> {
+                    event.getEventDetail().apply(visitDate, order);
+                    return event.getEventDetail();
+                })
+                .forEach(event -> printEventDetails(event));
+        System.out.println();
     }
 }
