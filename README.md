@@ -352,3 +352,13 @@ BUILD SUCCESSFUL in 0s
 [ ] Application.main()에서 전체 프로그램 흐름(입력 → 로직 → 출력) 제어
 
 [ ] 유효성 검사에서 IllegalArgumentException 발생 시, 에러 메시지 출력 후 해당 부분부터 입력 다시 받기
+
+## 주영님 리팩토링 권장 사항
+
+[ ] 스트림 전환
+
+[ ] 추상화를 통한 EventService 전략패턴 적용 or EventService 책임 분리
+
+[ ] 일급컬렉션 Orders(주문 목록)을 통한 주문 상태 관리
+
+[ ] 테스트 코드 작성
