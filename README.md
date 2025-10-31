@@ -361,4 +361,4 @@ BUILD SUCCESSFUL in 0s
 
 [ ] 일급컬렉션 Orders(주문 목록)을 통한 주문 상태 관리
 
-[ ] 테스트 코드 작성
+[ ] 테스트 코드 작성 및 Event, Menu, Order를 record로 바꾸고 객체 내에서 검증돌려서 정적 팩토리로 생성자 만들기

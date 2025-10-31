@@ -21,22 +21,21 @@ public class OrderValidator {
             }
         }
     }
-    public void existMenuName(Order order, List<Menu> menuList) {
-        Menu menuName = order.getOrderMenu();
-        if (!menuList.contains(menuName)) {
-            throw new IllegalArgumentException(MENU_NOT_EXIST.getMessage());
+    public void existMenuName(List<Order> orders, List<Menu> menuList) {
+        for(Order order : orders){
+            Menu menu = order.getOrderMenu();
+            if (!menuList.contains(menu)) {
+                throw new IllegalArgumentException(MENU_NOT_EXIST.getMessage());
+            }
         }
+
     }
     public void isOderListEmpty(List<Order> orderList) {
         if (orderList.isEmpty()) {
             throw new IllegalArgumentException(NO_ORDER_ADDED.getMessage());
         }
     }
-    public void hasDuplicateMenu(Order order, List<Order> orderList){
-        if(orderList.contains(order.getOrderMenu())){
-            throw new IllegalArgumentException(DUPLICATE_MENU.getMessage());
-        }
-    }
+
     public void onlyOrderDrink(List<Order> orderList) {
         for (Order order : orderList) {
             if (Category.DRINK != order.getOrderMenu().getCategory()) {

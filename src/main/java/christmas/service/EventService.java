@@ -17,6 +17,7 @@ import christmas.util.validator.EventValidator;
 import java.util.ArrayList;
 import java.util.List;
 import java.util.Optional;
+import java.util.Set;
 import java.util.concurrent.atomic.AtomicInteger;
 
 public class EventService {
@@ -78,6 +79,7 @@ public class EventService {
         return GIFT_QUALIFYING_AMOUNT.getAmount() <= orderService.totalOrderPrice(orders);
     }
 
+
     /**
      * 총 혜택 금액 계산 (모든 할인 금액 합계 + 증정 메뉴 가격
      */
@@ -101,7 +103,9 @@ public class EventService {
         List<Integer> datesList = getSpecialDayList();
 
         if (isCalAmountForEvent(orders)) {
-            addWeekEventToList(orders, date).ifPresent(events::add);
+            addWeekEventToList(orders, date).stream()
+                    .filter(event -> event.benefitPrice != 0)
+                    .forEach(events::add);
             addBeforeXmasDDayToList(date).ifPresent(events::add);
             addSpecialDayToList(date, datesList).ifPresent(events::add);
             addGiftToEventList(orders).ifPresent(events::add);
@@ -165,6 +169,6 @@ public class EventService {
      * 할인 후 예상 결제 금액
      * */
     public int calFinalAmount(List<Order> orders,int date){
-        return orderService.totalOrderPrice(orders) - totalBenefitAmount(orders,date) + GIFT_AMOUNT.getAmount();
+        return (orderService.totalOrderPrice(orders) - totalBenefitAmount(orders,date)) + verifiedGiftAmount(orders);
     }
 }

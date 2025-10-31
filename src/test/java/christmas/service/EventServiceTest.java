@@ -16,11 +16,13 @@ import java.util.List;
 import static org.junit.jupiter.api.Assertions.*;
 
 class EventServiceTest {
+    StringValidator stringValidator = new StringValidator();
+    IntegerValidator integerValidator = new IntegerValidator();
     DateValidator dateValidator = new DateValidator(new IntegerValidator());
     EventValidator eventValidator = new EventValidator(dateValidator);
-    EventService service = new EventService(eventValidator,new EventPlanRepository(),new OrderService());
+    EventService service = new EventService(eventValidator,new EventPlanRepository(),new OrderService(stringValidator,integerValidator));
     List<Order> orderList = new ArrayList<>();
-    OrderService orderService = new OrderService();
+    OrderService orderService = new OrderService(stringValidator,integerValidator);
 
     public void init() {
         Menu menu = new Menu("스테이크",80000, Category.MAIN_DISH);

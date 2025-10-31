@@ -20,5 +20,4 @@ public class Order {
     public int getOrderPrice() {
         return this.orderMenu.getPrice();
     }
-
 }

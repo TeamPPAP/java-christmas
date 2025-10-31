@@ -26,7 +26,7 @@ public class OutputView {
     public void printSelectedMenu(List<Order> orders) {
         System.out.println("<주문 메뉴>");
         for (Order order : orders) {
-            System.out.printf("%s $d개\n", order.getOrderMenu().getMenuName(), order.getQuantity());
+            System.out.printf("%s %d개\n", order.getOrderMenu().getMenuName(), order.getQuantity());
         }
     }
 
@@ -45,25 +45,30 @@ public class OutputView {
     }
 
     public void printBenefitList(List<Event> benefitList){
-        System.out.println("<혜택내역>");
-        for(Event event : benefitList){
-            System.out.printf("%s : -%d원\n", event.getEventName(), event.getBenefitPrice());
+        System.out.println("<혜택 내역>");
+        if(benefitList.isEmpty()){
+            System.out.println("없음");
+        }
+        if(!benefitList.isEmpty()){
+            for(Event event : benefitList){
+                System.out.printf("%s : -%d원\n", event.getEventName().getName(), event.getBenefitPrice());
+            }
         }
     }
 
     public void printTotalPrice(int totalPrice) {
         System.out.println("<총혜택 금액>");
-        System.out.printf("-%d\n", totalPrice);
+        System.out.printf("-%d원\n", totalPrice);
     }
 
     public void printExpectPurchaseAmount(int finalPurchaseAmount){
         System.out.println("<할인 후 예상 결제 금액>");
-        System.out.printf("%d원",finalPurchaseAmount);
+        System.out.printf("%d원\n",finalPurchaseAmount);
     }
 
     public void printBadgeAward(String badgeName){
         System.out.println("<12월 이벤트 배지>");
-        System.out.println();
+        System.out.println(badgeName);
     }
 
 }

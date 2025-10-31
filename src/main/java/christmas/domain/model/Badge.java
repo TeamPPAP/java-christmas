@@ -21,16 +21,16 @@ public enum Badge {
         return conditionAmount;
     }
 
-    public String awardBadge (int benefitAmount){
+    public static Badge awardBadge (int benefitAmount){
         if (benefitAmount >= STAR.conditionAmount && benefitAmount <= TREE.conditionAmount) {
-            return STAR.name;
+            return STAR;
         }
         if (benefitAmount >= TREE.conditionAmount && benefitAmount <= SANTA.conditionAmount) {
-            return TREE.name;
+            return TREE;
         }
         if(benefitAmount >= SANTA.conditionAmount){
-            return SANTA.name;
+            return SANTA;
         }
-        return NONE.name;
+        return NONE;
     }
 }

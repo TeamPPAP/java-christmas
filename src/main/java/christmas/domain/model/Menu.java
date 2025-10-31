@@ -23,5 +23,9 @@ public class Menu {
         return category;
     }
 
+    @Override
+    public boolean equals(Object obj) {
+        return obj.equals(this.menuName);
+    }
 }
 
