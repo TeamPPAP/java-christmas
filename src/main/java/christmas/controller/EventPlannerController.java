@@ -21,6 +21,7 @@ public class EventPlannerController {
         // 4. 방문일자에 따른 예상 이벤트 혜택 확인
         outputView.printEventPreviewMessage(visitDate.getDayOfMonth());
         // 5. 주문 내역 확인
+        System.out.println("<주문 메뉴>");
         System.out.println(order.getOrderSummary());
         // 6. 할인전 총 금액 확인
         outputView.printTotalBeforeDiscount(order.getTotalPrice());

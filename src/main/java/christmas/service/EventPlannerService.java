@@ -1,6 +1,5 @@
 package christmas.service;
 
-
 import christmas.domain.order.Order;
 import christmas.domain.entity.VisitDate;
 import christmas.domain.event.Benefit;

@@ -7,11 +7,9 @@ public enum MenuCategory {
     DRINK("음료");
 
     private final String title;
-
     MenuCategory(String title) {
         this.title = title;
     }
-
     @Override
     public String toString() {
         return "<" + title + ">";

@@ -13,16 +13,16 @@ public interface Benefit {
 
     public void apply(VisitDate visitDate, Order order);
 
-    default  boolean isApplicable(VisitDate visitDate, Order order){
-        if(!visitDate.isDuringPeriod(EVENT_START_DATE, EVENT_END_DATE)) {
+    default boolean isApplicable(VisitDate visitDate, Order order) {
+        if (!visitDate.isDuringPeriod(EVENT_START_DATE, EVENT_END_DATE)) {
             return false;
         }
 
-        if(order.getTotalPrice() < MINIMUM_ORDER_PRICE) {
+        if (order.getTotalPrice() < MINIMUM_ORDER_PRICE) {
             return false;
         }
 
-        if(order.containsOnlyCategory(MenuCategory.DRINK)) {
+        if (order.containsOnlyCategory(MenuCategory.DRINK)) {
             return false;
         }
 

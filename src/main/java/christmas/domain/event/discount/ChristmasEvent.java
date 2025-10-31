@@ -12,8 +12,7 @@ public class ChristmasEvent implements DiscountBenefit {
 
     @Override
     public void apply(VisitDate visitDate, Order order) {
-        if(!isApplicable(visitDate, order))
-            return ;
+        if (!isApplicable(visitDate, order)) return;
 
         setEventPeriod(visitDate);
 
@@ -22,17 +21,15 @@ public class ChristmasEvent implements DiscountBenefit {
 
     @Override
     public boolean isApplicable(VisitDate visitDate, Order order) {
-        if(!DiscountBenefit.super.isApplicable(visitDate, order))
-            return false;
+        if (!DiscountBenefit.super.isApplicable(visitDate, order)) return false;
 
-        if(!visitDate.isBeforeChristmas())
-            return false;
+        if (!visitDate.isBeforeChristmas()) return false;
 
         return true;
     }
 
-    private void setEventPeriod(VisitDate visitDate){
-        this.eventPeriod = visitDate.getDayOfMonth() -1;
+    private void setEventPeriod(VisitDate visitDate) {
+        this.eventPeriod = visitDate.getDayOfMonth() - 1;
     }
 
     @Override
