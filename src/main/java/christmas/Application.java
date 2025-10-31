@@ -1,7 +1,13 @@
 package christmas;
 
+import christmas.controller.RestaurantController;
+import christmas.init.InitController;
+
 public class Application {
     public static void main(String[] args) {
-        // TODO: 프로그램 구현
+        InitController init = new InitController();
+        RestaurantController controller = init.forCreateController();
+
+        controller.run();
     }
 }
