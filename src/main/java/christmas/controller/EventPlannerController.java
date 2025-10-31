@@ -23,6 +23,7 @@ public class EventPlannerController {
         outputView.printWelcome();
 
         VisitDate visitDate = readVisitDate();
+        outputView.printMenu();
         Orders orders = readOrders();
 
         outputView.printEventPreviewHeader(visitDate.getDate().getDayOfMonth());
