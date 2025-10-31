@@ -4,9 +4,13 @@ import christmas.domain.benefit.Badge;
 import christmas.domain.benefit.Giveaway;
 import christmas.domain.discount.Discounts;
 import christmas.domain.menu.Menu;
+import christmas.domain.menu.MenuType;
 import christmas.domain.order.Order;
 import christmas.domain.order.Orders;
+
 import java.text.DecimalFormat;
+import java.util.Arrays;
+import java.util.stream.Collectors;
 
 public class OutputView {
 
@@ -14,6 +18,22 @@ public class OutputView {
 
     public void printWelcome() {
         System.out.println("안녕하세요! 포텐업 식당 12월 이벤트 플래너입니다.");
+    }
+
+    public void printMenu() {
+        Arrays.stream(MenuType.values())
+                .filter(menuType -> menuType != MenuType.NONE)
+                .forEach(this::printMenuSection);
+    }
+
+    private void printMenuSection(MenuType menuType) {
+        System.out.println("\n<" + menuType.getName() + ">");
+        String formattedMenus = Arrays.stream(Menu.values())
+                .filter(menu -> menu.getType() == menuType)
+                .filter(menu -> menu != Menu.NONE)
+                .map(menu -> String.format("%s(%,d)", menu.getName(), menu.getPrice()))
+                .collect(Collectors.joining(", "));
+        System.out.println(formattedMenus);
     }
 
     public void printEventPreviewHeader(int day) {
