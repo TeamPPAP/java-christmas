@@ -2,7 +2,7 @@ package christmas.util.validator;
 import static christmas.domain.model.message.ErrorMessage.*;
 import static christmas.domain.model.constant.FinalConstant.*;
 
-import christmas.domain.model.Category;
+import christmas.domain.model.constant.Category;
 import christmas.domain.model.Menu;
 import christmas.domain.model.Order;
 import java.util.List;

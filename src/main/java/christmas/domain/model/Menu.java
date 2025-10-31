@@ -1,14 +1,20 @@
 package christmas.domain.model;
 
-public class Menu {
-    public final String menuName;
-    public final int price;
-    public final Category category;
+import christmas.domain.model.constant.Category;
 
-    public Menu(String menuName, int price, Category category) {
-        this.menuName = menuName;
-        this.price = price;
-        this.category = category;
+import static christmas.domain.model.message.ErrorMessage.*;
+
+public record Menu(String menuName, int price, Category category) {
+    public Menu {
+        if(menuName == null || menuName.isBlank()){
+            throw new IllegalArgumentException(MENU_NAME_IS_BLANK.getMessage());
+        }
+        if(price<0){
+            throw new IllegalArgumentException(MENU_PRICE_UNDER_ZERO.getMessage());
+        }
+        if(category == null){
+            throw new IllegalArgumentException(MENU_CATEGORY_IS_BLANK.getMessage());
+        }
     }
 
     public String getMenuName() {

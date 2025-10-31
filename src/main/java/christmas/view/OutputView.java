@@ -1,8 +1,7 @@
 package christmas.view;
 
-import christmas.domain.model.Event;
 import christmas.domain.model.Order;
-import christmas.service.MenuService;
+
 import java.util.List;
 
 public class OutputView {
@@ -44,17 +43,6 @@ public class OutputView {
         System.out.printf("%s\n", gift);
     }
 
-    public void printBenefitList(List<Event> benefitList){
-        System.out.println("<혜택 내역>");
-        if(benefitList.isEmpty()){
-            System.out.println("없음");
-        }
-        if(!benefitList.isEmpty()){
-            for(Event event : benefitList){
-                System.out.printf("%s : -%d원\n", event.getEventName().getName(), event.getBenefitPrice());
-            }
-        }
-    }
 
     public void printTotalPrice(int totalPrice) {
         System.out.println("<총혜택 금액>");

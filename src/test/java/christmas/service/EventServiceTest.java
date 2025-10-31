@@ -1,19 +1,14 @@
 package christmas.service;
 
-import christmas.domain.model.Category;
+import christmas.domain.model.constant.Category;
 import christmas.domain.model.Menu;
 import christmas.domain.model.Order;
 import christmas.repository.EventPlanRepository;
-import christmas.repository.MenuRepository;
-import christmas.util.input.IntegerReader;
 import christmas.util.validator.*;
-import christmas.view.InputView;
 import org.junit.jupiter.api.Test;
 
 import java.util.ArrayList;
 import java.util.List;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class EventServiceTest {
     StringValidator stringValidator = new StringValidator();

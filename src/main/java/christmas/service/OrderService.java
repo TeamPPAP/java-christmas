@@ -23,7 +23,7 @@ public class OrderService {
 
     public int totalOrderPrice(List<Order> orders) {
         return orders.stream().mapToInt(order ->
-                order.getOrderPrice() * order.getQuantity()).sum();
+                order.getOnlyOrderPrice() * order.getQuantity()).sum();
     }
 
     public List<String> splitOrderSentence(String order) throws IllegalArgumentException {

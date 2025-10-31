@@ -1,10 +1,13 @@
 package christmas.domain.model;
 
+import java.util.Arrays;
+
 public enum Badge {
-    STAR("별", 5000),
-    TREE("트리", 10000),
     SANTA("산타", 20000),
+    TREE("트리", 10000),
+    STAR("별", 5000),
     NONE("없음",0);
+
     public final String name;
     public final int conditionAmount;
 
@@ -21,16 +24,11 @@ public enum Badge {
         return conditionAmount;
     }
 
-    public static Badge awardBadge (int benefitAmount){
-        if (benefitAmount >= STAR.conditionAmount && benefitAmount <= TREE.conditionAmount) {
-            return STAR;
-        }
-        if (benefitAmount >= TREE.conditionAmount && benefitAmount <= SANTA.conditionAmount) {
-            return TREE;
-        }
-        if(benefitAmount >= SANTA.conditionAmount){
-            return SANTA;
-        }
-        return NONE;
+    public static String awardBadge(int benefitAmount) {
+        return Arrays.stream(values())
+                .filter(badge -> benefitAmount >= badge.conditionAmount)
+                .findFirst()
+                .map(badge -> badge.name)
+                .orElse(NONE.name);
     }
 }

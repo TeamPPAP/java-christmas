@@ -4,7 +4,7 @@ import static christmas.domain.model.constant.FinalConstant.*;
 import static christmas.domain.model.defualtAmount.DefaultAmount.BASE_DISCOUNT_AMOUNT;
 import static christmas.domain.model.defualtAmount.DefaultAmount.GIFT_QUALIFYING_AMOUNT;
 
-import christmas.domain.model.Category;
+import christmas.domain.model.constant.Category;
 
 import java.util.List;
 

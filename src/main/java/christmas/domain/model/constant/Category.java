@@ -1,4 +1,4 @@
-package christmas.domain.model;
+package christmas.domain.model.constant;
 
 public enum Category {
     APPETIZER("애피타이저"),

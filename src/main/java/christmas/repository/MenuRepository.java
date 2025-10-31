@@ -1,6 +1,6 @@
 package christmas.repository;
 
-import christmas.domain.model.Category;
+import christmas.domain.model.constant.Category;
 import christmas.domain.model.Menu;
 import java.util.ArrayList;
 import java.util.List;

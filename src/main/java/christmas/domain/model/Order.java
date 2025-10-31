@@ -1,23 +1,28 @@
 package christmas.domain.model;
 
-public class Order {
-    private final Menu orderMenu;
-    private final int quantity;
+import static christmas.domain.model.message.ErrorMessage.NO_ORDER_ADDED;
+import static christmas.domain.model.message.ErrorMessage.ORDER_QTY_ZERO;
 
-    public Order(Menu order, int quantity) {
-        this.orderMenu = order;
-        this.quantity = quantity;
+public record Order(Menu orderMenu, int quantity) {
+
+    public Order {
+        if(orderMenu == null){
+            throw new IllegalArgumentException(NO_ORDER_ADDED.getMessage());
+        }
+        if(quantity < 1){
+            throw new IllegalArgumentException(ORDER_QTY_ZERO.getMessage());
+        }
     }
 
     public Menu getOrderMenu() {
         return orderMenu;
     }
-
     public int getQuantity() {
         return quantity;
     }
 
-    public int getOrderPrice() {
+    public int getOrderAmount(){return this.quantity * this.orderMenu.getPrice();}
+    public int getOnlyOrderPrice() {
         return this.orderMenu.getPrice();
     }
 }
