@@ -9,10 +9,10 @@ import christmas.domain.model.constant.Category;
 import java.util.List;
 
 public class EventValidator {
-    private final DateValidator dateValidator;
 
-    public EventValidator(DateValidator dateValidator) {
-        this.dateValidator = dateValidator;
+
+    public EventValidator() {
+
     }
 
     /**

@@ -15,9 +15,7 @@ public enum ErrorMessage{
     MENU_PRICE_UNDER_ZERO("[ERROR] 메뉴 가격은 0원 이하로 입력 될 수 없습니다.\n"),
     MENU_CATEGORY_IS_BLANK("[ERROR] 메뉴의 카테고리가 입력되지 않았습니다.\n"),
     MENU_NAME_IS_BLANK("[ERROR] 메뉴 이름이 입력되지 않았습니다.\n"),
-    ;
-
-    //DUPLICATE_MENU("[ERROR] 이미 추가된 메뉴입니다.\n"),;
+    DUPLICATE_MENU("[ERROR] 이미 추가된 메뉴입니다.\n"),;
 
     private final String message;
 

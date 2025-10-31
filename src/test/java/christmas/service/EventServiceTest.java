@@ -14,8 +14,7 @@ class EventServiceTest {
     StringValidator stringValidator = new StringValidator();
     IntegerValidator integerValidator = new IntegerValidator();
     DateValidator dateValidator = new DateValidator(new IntegerValidator());
-    EventValidator eventValidator = new EventValidator(dateValidator);
-    EventService service = new EventService(eventValidator,new EventPlanRepository(),new OrderService(stringValidator,integerValidator));
+    EventValidator eventValidator = new EventValidator();
     List<Order> orderList = new ArrayList<>();
     OrderService orderService = new OrderService(stringValidator,integerValidator);
 
@@ -31,7 +30,6 @@ class EventServiceTest {
     @Test
     void isCalAmountForEvent() {
         init();
-        System.out.println(service.isCalAmountForEvent(orderList));
     }
 
     @Test

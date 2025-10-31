@@ -1,8 +1,5 @@
 package christmas.view;
 
-import christmas.util.input.InputFactory;
-import christmas.util.input.IntegerReader;
-
 import java.util.Scanner;
 
 public class InputView {
@@ -12,7 +9,4 @@ public class InputView {
         return sc.nextLine();
     }
 
-    public void close() {
-        sc.close();
-    }
 }
