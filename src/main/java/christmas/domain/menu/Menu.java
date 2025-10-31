@@ -1,6 +1,6 @@
-package christmas.domain.entity;
+package christmas.domain.menu;
 
-import christmas.domain.enums.MenuItem;
+import christmas.domain.menu.MenuItem;
 
 import java.util.Arrays;
 import java.util.Comparator;

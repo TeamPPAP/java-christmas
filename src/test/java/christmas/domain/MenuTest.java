@@ -1,6 +1,6 @@
 package christmas.domain;
 
-import christmas.domain.entity.Menu;
+import christmas.domain.menu.Menu;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
 

@@ -5,11 +5,15 @@ public class InputView {
     private static final Scanner scanner = new Scanner(System.in);
 
     public int getVisitDate() {
-        return Integer.parseInt(scanner.nextLine());
+        int visitDate =  Integer.parseInt(scanner.nextLine());
+        System.out.println();
+        return visitDate;
     }
 
     public String getOrderDetails() {
-        return scanner.nextLine();
+        String order =  scanner.nextLine();
+        System.out.println();
+        return order;
     }
 
 

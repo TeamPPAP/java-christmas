@@ -1,4 +1,4 @@
-package christmas.domain.enums;
+package christmas.domain.menu;
 public enum MenuItem {
     // APPETIZER
     MUSHROOM_SOUP("양송이수프", 6000, MenuCategory.APPETIZER),

@@ -1,11 +1,10 @@
-package christmas.domain.entity;
+package christmas.domain.order;
 
-import christmas.domain.enums.MenuCategory;
-import christmas.domain.enums.MenuItem;
+import christmas.domain.menu.MenuCategory;
+import christmas.domain.menu.MenuItem;
 
 import java.util.Arrays;
 import java.util.Map;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 public class Order {

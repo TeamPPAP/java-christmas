@@ -1,12 +1,5 @@
 package christmas.view;
 
-import christmas.domain.entity.Order;
-import christmas.domain.entity.VisitDate;
-import christmas.domain.event.Event;
-import christmas.domain.event.EventDetail;
-
-import java.util.Arrays;
-
 public class OutputView {
 
     public void printWelcomeMessage() {
@@ -22,30 +15,17 @@ public class OutputView {
     }
 
     public void printEventPreviewMessage(int date) {
-        System.out.println("12월 " + date +"일에 포텐업 식당에서 받을 이벤트 혜택 미리 보기!");
-    }
-
-    public void printOrderSummary(String orderSummary) {
-        System.out.println("<주문메뉴>\n" + orderSummary);
+        System.out.println("\n12월 " + date +"일에 포텐업 식당에서 받을 이벤트 혜택 미리 보기!\n");
     }
 
     public void printTotalBeforeDiscount(int totalBeforeDiscount) {
-        System.out.println("<할인 전 총주문 금액>\n"
+        System.out.println("\n<할인 전 총주문 금액>\n"
                 + String.format("%,d", totalBeforeDiscount) + "원\n");
     }
 
-    public void printEventDetails(EventDetail eventDetail) {
-        System.out.println(eventDetail.toString());
-    }
-
-    public void printEvent(VisitDate visitDate, Order order) {
-        System.out.println("<혜택 내역>");
-        Arrays.stream(Event.values())
-                .map(event -> {
-                    event.getEventDetail().apply(visitDate, order);
-                    return event.getEventDetail();
-                })
-                .forEach(event -> printEventDetails(event));
+    public void printEvent(String eventSummery) {
+        System.out.println("\n<혜택 내역>");
+        System.out.println(eventSummery);
         System.out.println();
     }
 }

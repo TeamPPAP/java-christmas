@@ -1,10 +1,9 @@
 package christmas.domain.entity;
 
-import christmas.domain.enums.MenuItem;
+import christmas.domain.menu.MenuItem;
+import christmas.domain.order.Order;
 import org.junit.jupiter.api.Assertions;
 import org.junit.jupiter.api.Test;
-
-import static org.junit.jupiter.api.Assertions.*;
 
 class OrderTest {
 

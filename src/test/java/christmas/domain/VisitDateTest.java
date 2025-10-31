@@ -53,7 +53,7 @@ class VisitDateTest {
         int date = 25;
         VisitDate visitDate = new VisitDate(date);
         //when
-        boolean result = visitDate.specialDay();
+        boolean result = visitDate.isSpecialDay();
         //then
         Assertions.assertTrue(result, "specialDay should be true");
     }
