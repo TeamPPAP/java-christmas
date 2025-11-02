@@ -1,5 +1,7 @@
 package christmas.util.validator;
 
+import static christmas.domain.model.message.ErrorMessage.*;
+
 public  class IntegerValidator {
 
     /**
@@ -9,26 +11,20 @@ public  class IntegerValidator {
      * **/
     public int parseNotBlankInt(String input) {
         if (input.isBlank()) {
-            throw new IllegalArgumentException("빈값은 입력될 수 없습니다.");
+            throw new IllegalArgumentException(EMPTY_INPUT.getMessage());
         }
         try {
             return Integer.parseInt(input);
         } catch (NumberFormatException e) {
-            throw new IllegalArgumentException("입력값은 숫자여야 합니다.");
+            throw new IllegalArgumentException(INVALID_ORDER_FORMAT.getMessage());
         }
     }
 
     public void ensureInRange(int num, int min, int max) {
         if (num < min || num > max) {
             throw new IllegalArgumentException(
-                    String.format("숫자는 %d와 %d 사이여야 합니다.", min, max)
+                    String.format(INVALID_DATE_RANGE.getMessage(), min, max)
             );
-        }
-    }
-
-    public void ensurePositive(int num) {
-        if (num < 0) {
-            throw new IllegalArgumentException("숫자는 0보다 커야 합니다.");
         }
     }
 

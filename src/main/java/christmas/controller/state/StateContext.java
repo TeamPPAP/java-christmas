@@ -108,10 +108,17 @@ public class StateContext {
     }
 
 
-    //입력
-    public int readInt(){
+    //입력 및 검증
+    public int parseJustInt(){
         return integerReader.read();
     }
+
+    public int validateVisit(){
+        return dateValidator.validateVisitDate(readString());
+    }
+
+
+
     public String readString(){
         return stringReader.read();
     }

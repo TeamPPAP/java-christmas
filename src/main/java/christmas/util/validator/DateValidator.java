@@ -13,7 +13,7 @@ public class DateValidator {
         int date;
         try {
             date = integerValidator.parseNotBlankInt(input);
-        } catch (IllegalArgumentException e) {
+        } catch (NumberFormatException e) {
             throw new IllegalArgumentException(INVALID_DATE.getMessage());
         }
         validateDateRange(date);
