@@ -24,7 +24,7 @@ public class BenefitCalculator {
         int totalDiscountAmount = calTotalDiscountAmount(applicableEvents);
         int giftBenefitAmount = calGiftBenefitAmount(gift);
         int totalBenefitAmount = calTotalBenefitAmount(totalDiscountAmount, giftBenefitAmount);
-        int finalPurchaseAmount = calculateFinalPurchaseAmount(orders, totalDiscountAmount);
+        int finalPurchaseAmount = calFinalPurchaseAmount(orders, totalDiscountAmount);
 
         return new BenefitResult(applicableEvents, totalDiscountAmount, gift, totalBenefitAmount, finalPurchaseAmount);
     }
@@ -52,7 +52,7 @@ public class BenefitCalculator {
         return totalDiscountAmount + giftBenefitAmount;
     }
 
-    private int calculateFinalPurchaseAmount(Orders orders, int totalDiscountAmount) {
+    private int calFinalPurchaseAmount(Orders orders, int totalDiscountAmount) {
         int totalAmountBeforeBenefit = orders.totalOrderAmount();
         return totalAmountBeforeBenefit - totalDiscountAmount;
     }
