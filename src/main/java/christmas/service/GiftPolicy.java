@@ -1,10 +1,10 @@
 package christmas.service;
 
-import christmas.domain.model.Menu;
-import christmas.domain.model.Order;
+import christmas.domain.model.Orders;
+import christmas.service.dto.Gift;
+
+import java.util.Optional;
 
 public interface GiftPolicy {
-    boolean isSatisfy(Order order,int date);
-    int discountAmount();
-    Menu giftMenu();
+    Optional<Gift> isSatisfy(Orders orders, int date);
 }
