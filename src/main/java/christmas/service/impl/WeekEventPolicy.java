@@ -4,7 +4,6 @@ import christmas.domain.model.Orders;
 import christmas.domain.model.constant.Category;
 import christmas.service.dto.Event;
 import christmas.service.EventPolicy;
-import christmas.util.validator.EventValidator;
 
 import java.time.DayOfWeek;
 import java.time.LocalDate;

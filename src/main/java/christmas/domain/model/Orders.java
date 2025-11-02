@@ -3,8 +3,6 @@ package christmas.domain.model;
 import christmas.domain.model.constant.Category;
 
 import java.util.List;
-import java.util.Set;
-import java.util.stream.Collectors;
 
 import static christmas.domain.model.message.ErrorMessage.*;
 
@@ -12,17 +10,15 @@ public final class Orders {
     private final List<Order> orders;
 
     public Orders(List<Order> orders) {
-        if(orders.isEmpty()){
-            throw new IllegalArgumentException(NO_ORDER_ADDED.getMessage());
-        }
-        ensureDuplicateOrder(orders);
+        ensureOrdersEmpty();
+        ensureNotOnlyDrink();
+        totalQuantityOfOrder();
         this.orders = List.copyOf(orders);
     }
 
-    private void ensureDuplicateOrder(List<Order> orders){
-        Set<String> orderString = orders.stream().map(order -> order.orderMenu().menuName()).collect(Collectors.toSet());
-        if(orderString.size()!=orders.size()){
-            throw new IllegalArgumentException(DUPLICATE_MENU.getMessage());
+    private void ensureOrdersEmpty(){
+        if(orders.isEmpty()){
+            throw new IllegalArgumentException(NO_ORDER_ADDED.getMessage());
         }
     }
 
@@ -48,6 +44,7 @@ public final class Orders {
         }
         return totalOrderQuantity;
     }
+
     public int quantityOfOrderByCategory(Category category){
         return orders.stream()
                 .filter(o -> o.getOrderMenu().getCategory() == category)
