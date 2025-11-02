@@ -31,7 +31,7 @@ public class SpecialDayPolicy implements EventPolicy {
 
 
     private Event createEvent() {
-        return new Event("특별 할인",-discountAmount());
+        return new Event("특별 할인",discountAmount());
     }
 
     private boolean isSpecialDay(int date){

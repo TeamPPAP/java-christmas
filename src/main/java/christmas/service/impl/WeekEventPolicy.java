@@ -32,7 +32,7 @@ public class WeekEventPolicy implements EventPolicy {
         int discountAmount = orders.quantityOfOrderByCategory(category) * WEEK_DISCOUNT_AMOUNT.getAmount();
 
         String eventName = isWeekend(date) ? "주말 할인" : "평일 할인";
-        return new Event(eventName, -discountAmount);
+        return new Event(eventName, discountAmount);
     }
 
     private Category decideDiscountCategory(int date) {

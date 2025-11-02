@@ -24,7 +24,7 @@ public class XmasDdayPolicy implements EventPolicy {
     }
 
     private Event createEvent(int date) {
-        return new Event("크리스마스 디데이 할인",-discountAmount(date));
+        return new Event("크리스마스 디데이 할인",discountAmount(date));
     }
 
     private int discountAmount(int date) {
