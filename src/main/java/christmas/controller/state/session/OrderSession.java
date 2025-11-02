@@ -7,7 +7,7 @@ import christmas.domain.model.Orders;
 import java.util.ArrayList;
 import java.util.List;
 
-public class OrderSession {
+public final class OrderSession {
     private Integer date;
     private Menu selectedMenu;
     private final List<Order> orderList = new ArrayList<>();
