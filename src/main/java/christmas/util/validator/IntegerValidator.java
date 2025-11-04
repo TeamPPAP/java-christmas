@@ -20,17 +20,11 @@ public  class IntegerValidator {
         }
     }
 
-    public void ensureInRange(int num, int min, int max) {
-        if (num < min || num > max) {
-            throw new IllegalArgumentException(
-                    String.format(INVALID_DATE_RANGE.getMessage(), min, max)
-            );
+    public int quantityValidate(String input){
+        int quantity = parseNotBlankInt(input);
+        if(quantity<1){
+            throw new IllegalArgumentException(ORDER_QTY_ZERO.getMessage());
         }
-    }
-
-    public void ensureDigitsOnly(String str) {
-        if (!str.matches("\\d+")) {
-            throw new IllegalArgumentException("입력값은 부호(+, -) 없는 숫자만 포함해야 합니다.");
-        }
+        return quantity;
     }
 }

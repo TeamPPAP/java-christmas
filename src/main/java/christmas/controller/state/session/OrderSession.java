@@ -48,4 +48,8 @@ public final class OrderSession {
     public Orders toOrders(){
         return new Orders(orderList);
     }
+
+    public boolean hasOrders() {
+        return !orderList.isEmpty();
+    }
 }

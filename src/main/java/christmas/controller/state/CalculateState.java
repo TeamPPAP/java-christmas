@@ -1,6 +1,6 @@
 package christmas.controller.state;
 
-public class CaculateState implements State{
+public class CalculateState implements State{
     @Override
     public void stateHandler(StateContext context) {
 

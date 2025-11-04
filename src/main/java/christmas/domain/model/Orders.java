@@ -45,6 +45,10 @@ public final class Orders {
         return totalOrderQuantity;
     }
 
+    public List<Order> getOrdersToList() {
+        return orders;
+    }
+
     public int quantityOfOrderByCategory(Category category){
         return orders.stream()
                 .filter(o -> o.getOrderMenu().getCategory() == category)

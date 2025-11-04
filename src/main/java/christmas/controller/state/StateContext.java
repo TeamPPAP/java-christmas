@@ -9,8 +9,8 @@ import christmas.service.BenefitCalculator;
 import christmas.service.dto.BenefitResult;
 import christmas.util.input.InputFactory;
 import christmas.util.input.InputReader;
-import christmas.util.input.StringReader;
 import christmas.util.validator.DateValidator;
+import christmas.util.validator.IntegerValidator;
 import christmas.view.InputView;
 
 import java.util.ArrayDeque;
@@ -49,10 +49,18 @@ public class StateContext {
 
     public void push(State state) {
         stateStack.push(state);
+        noticeObservers();
     }
 
     public void pop() {
-        stateStack.pop();
+        if(!stateStack.isEmpty()){
+            stateStack.pop();
+            noticeObservers();
+        }
+    }
+
+    public boolean isEmpty(){
+        return stateStack.isEmpty();
     }
 
     //옵저버 관리
@@ -98,6 +106,10 @@ public class StateContext {
         noticeObservers();
     }
 
+    public boolean hasOrders() {
+        return session.hasOrders();
+    }
+
     public boolean isOrderListEmpty(){
         return session.isOrderListEmpty();
     }
@@ -113,11 +125,13 @@ public class StateContext {
         return integerReader.read();
     }
 
+    public int quantityValidate(){
+        return new IntegerValidator().quantityValidate(readString());
+    }
+
     public int validateVisit(){
         return dateValidator.validateVisitDate(readString());
     }
-
-
 
     public String readString(){
         return stringReader.read();
