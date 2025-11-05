@@ -10,21 +10,25 @@ public final class Orders {
     private final List<Order> orders;
 
     public Orders(List<Order> orders) {
-        ensureOrdersEmpty();
-        ensureNotOnlyDrink();
-        totalQuantityOfOrder();
         this.orders = List.copyOf(orders);
     }
 
-    private void ensureOrdersEmpty(){
+    public void ensureOrdersEmpty(){
         if(orders.isEmpty()){
             throw new IllegalArgumentException(NO_ORDER_ADDED.getMessage());
         }
     }
 
-    private void ensureNotOnlyDrink(){
+    public void ensureNotOnlyDrink(){
         if(orders.stream().allMatch(order -> Category.DRINK == order.getOrderMenu().getCategory())){
             throw new IllegalArgumentException(DRINK_ONLY.getMessage());
+        }
+    }
+
+    public void totalQuantityOfOrder(){
+        int totalOrderQuantity = orders.stream().mapToInt(Order::quantity).sum();
+        if(totalOrderQuantity>20){
+            throw new IllegalArgumentException(ORDER_LIMIT_EXCEEDED.getMessage());
         }
     }
 
@@ -37,13 +41,6 @@ public final class Orders {
         return orders.stream().mapToInt(Order::getOrderAmount).sum();
     }
 
-    public int totalQuantityOfOrder(){
-        int totalOrderQuantity = orders.stream().mapToInt(Order::quantity).sum();
-        if(totalOrderQuantity>20){
-            throw new IllegalArgumentException(ORDER_LIMIT_EXCEEDED.getMessage());
-        }
-        return totalOrderQuantity;
-    }
 
     public List<Order> getOrdersToList() {
         return orders;

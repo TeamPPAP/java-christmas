@@ -29,10 +29,6 @@ public final class OrderSession {
         this.selectedMenu = selectedMenu;
     }
 
-    public List<Order> getOrderList() {
-        return orderList;
-    }
-
     public void addOrder(Order order){
         orderList.add(order);
     }

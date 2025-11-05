@@ -24,11 +24,10 @@ public enum Badge {
         return conditionAmount;
     }
 
-    public static String awardBadge(int benefitAmount) {
+    public static Badge awardBadge(int benefitAmount) {
         return Arrays.stream(values())
                 .filter(badge -> benefitAmount >= badge.conditionAmount)
                 .findFirst()
-                .map(badge -> badge.name)
-                .orElse(NONE.name);
+                .orElse(NONE);
     }
 }

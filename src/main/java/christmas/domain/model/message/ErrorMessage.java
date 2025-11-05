@@ -15,6 +15,7 @@ public enum ErrorMessage{
     EMPTY_INPUT("[ERROR] 빈값은 입력될 수 없습니다.\n"),
     INVALID_CHARACTER("[ERROR] 특수문자는 사용할 수 없습니다.\n"),
     NOT_COMPLETE_KOREAN("[ERROR] 완성된 한글 글자만 입력할 수 있습니다.\n"),
+    RETRY_INPUT("[ERROR] Y/N으로 입력해 주세요.\n"),
     MENU_PRICE_UNDER_ZERO("[ERROR] 메뉴 가격은 0원 이하로 입력 될 수 없습니다.\n"),
     MENU_CATEGORY_IS_BLANK("[ERROR] 메뉴의 카테고리가 입력되지 않았습니다.\n"),
     MENU_NAME_IS_BLANK("[ERROR] 메뉴 이름이 입력되지 않았습니다.\n"),

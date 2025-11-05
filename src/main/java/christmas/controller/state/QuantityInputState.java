@@ -2,10 +2,14 @@ package christmas.controller.state;
 
 import christmas.domain.model.Menu;
 import christmas.domain.model.Order;
+import christmas.domain.model.Orders;
 import christmas.domain.model.constant.Category;
 
+import java.util.ArrayList;
+import java.util.List;
+
 import static christmas.domain.model.message.ErrorMessage.DUPLICATE_MENU;
-import static christmas.domain.model.message.ErrorMessage.ORDER_LIMIT_EXCEEDED;
+import static christmas.domain.model.message.ErrorMessage.ORDER_QTY_ZERO;
 
 public class QuantityInputState implements State{
     private final Category category;
@@ -21,7 +25,7 @@ public class QuantityInputState implements State{
         while(true){
             int quantity;
             try{
-                quantity = context.quantityValidate();
+                quantity = context.parseJustInt();
             }catch (IllegalArgumentException e){
                 System.out.printf(e.getMessage());
                 System.out.println("수량 : ");
@@ -36,6 +40,9 @@ public class QuantityInputState implements State{
                 return;
             }
             try {
+                if(quantity < 1){
+                    throw new IllegalArgumentException(ORDER_QTY_ZERO.getMessage());
+                }
                 Order newOrder = new Order(selectedMenu, quantity);
                 validateNewOrder(context, newOrder);
                 context.addOrder(newOrder);
@@ -51,7 +58,7 @@ public class QuantityInputState implements State{
     }
     private void validateNewOrder(StateContext context, Order newOrder) {
         checkDuplicateMenu(context, newOrder);
-        checkTotalQuantityLimit(context, newOrder);
+        validateOrders(context, newOrder);
     }
 
     private void checkDuplicateMenu(StateContext context, Order newOrder) {
@@ -63,13 +70,11 @@ public class QuantityInputState implements State{
         }
     }
 
-    private void checkTotalQuantityLimit(StateContext context, Order newOrder) {
-        int currentTotal = context.getOrders().getOrdersToList().stream()
-                .mapToInt(Order::getQuantity)
-                .sum();
-        int newTotal = currentTotal + newOrder.getQuantity();
-        if (newTotal > 20) {
-            throw new IllegalArgumentException(String.format(ORDER_LIMIT_EXCEEDED.getMessage(),currentTotal,newOrder.quantity()));
-        }
+    private void validateOrders(StateContext context, Order newOrder) {
+        List<Order> orderList = new ArrayList<>(context.getOrders().getOrdersToList());
+        orderList.add(newOrder);
+        Orders temp = new Orders(orderList);
+        temp.totalQuantityOfOrder();
+        temp.ensureNotOnlyDrink();
     }
 }

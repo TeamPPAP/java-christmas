@@ -66,5 +66,7 @@ public class MenuSelectState implements State{
         context.pop();
         context.push(new QuantityInputState(category));
     }
-
+    public Category getCategory(){
+        return category;
+    }
 }

@@ -19,7 +19,7 @@ import java.util.Deque;
 import java.util.List;
 
 public class StateContext {
-    private final Deque<State> stateStack  = new ArrayDeque<>();
+    private final Deque<State> stateStack = new ArrayDeque<>();
     private final List<StateObserver> observers = new ArrayList<>();
 
     private final OrderSession session = new OrderSession();
@@ -39,12 +39,17 @@ public class StateContext {
         this.benefitCalculator = benefitCalculator;
         this.menuRepository = menuRepository;
     }
+
     //상태 스택
-    public void run(){
-        while(!stateStack.isEmpty()){
+    public void run() {
+        while (!stateStack.isEmpty()) {
             State state = stateStack.peek();
             state.stateHandler(this);
         }
+    }
+
+    public State peek() {
+        return stateStack.peek();
     }
 
     public void push(State state) {
@@ -53,13 +58,13 @@ public class StateContext {
     }
 
     public void pop() {
-        if(!stateStack.isEmpty()){
+        if (!stateStack.isEmpty()) {
             stateStack.pop();
             noticeObservers();
         }
     }
 
-    public boolean isEmpty(){
+    public boolean isEmpty() {
         return stateStack.isEmpty();
     }
 
@@ -71,37 +76,40 @@ public class StateContext {
     public void noticeObservers() {
         observers.forEach(observer -> observer.updateState(this));
     }
+
+    public int getDateSession() {
+        return session.getDate();
+    }
+
     //오더 세션 관리
-    public void setDateSession(int date){
+    public void setDateSession(int date) {
         session.setDate(date);
         noticeObservers();
     }
 
-    public int getDateSession(){
-        return session.getDate();
+    public Menu getSelectedMenu() {
+        return session.getSelectedMenu();
     }
-    public void setSelectedMenu(Menu selectedMenu){
+
+    public void setSelectedMenu(Menu selectedMenu) {
         session.setSelectedMenu(selectedMenu);
         noticeObservers();
     }
 
-    public Menu getSelectedMenu(){
-        return session.getSelectedMenu();
-    }
-
-    public List<Menu> getMenuList(){
+    public List<Menu> getMenuList() {
         return menuRepository.getMenuList();
     }
-    public void addOrder(Order order){
+
+    public void addOrder(Order order) {
         session.addOrder(order);
         noticeObservers();
     }
 
-    public Orders getOrders(){
+    public Orders getOrders() {
         return session.toOrders();
     }
 
-    public void clearOrder(){
+    public void clearOrder() {
         session.clearOrder();
         noticeObservers();
     }
@@ -110,30 +118,37 @@ public class StateContext {
         return session.hasOrders();
     }
 
-    public boolean isOrderListEmpty(){
+    public boolean isOrderListEmpty() {
         return session.isOrderListEmpty();
     }
 
     //비지니스 - 혜택 계산
-    public BenefitResult calculateBenefit(){
+    public BenefitResult calculateBenefit() {
         return benefitCalculator.calculateBenefit(getOrders(), getDateSession());
     }
 
 
     //입력 및 검증
-    public int parseJustInt(){
+    public int parseJustInt() {
         return integerReader.read();
     }
 
-    public int quantityValidate(){
+    public int quantityValidate() {
         return new IntegerValidator().quantityValidate(readString());
     }
 
-    public int validateVisit(){
+    public int validateVisit() {
         return dateValidator.validateVisitDate(readString());
     }
 
-    public String readString(){
+    public String readString() {
         return stringReader.read();
+    }
+
+    public void validateOrders(){
+        Orders orders = getOrders();
+        orders.ensureOrdersEmpty();
+        orders.totalQuantityOfOrder();
+        orders.ensureNotOnlyDrink();
     }
 }
