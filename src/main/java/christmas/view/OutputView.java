@@ -25,9 +25,8 @@ public class OutputView {
 
     public void printSelectedMenu(List<Order> orders) {
         System.out.println("<주문 메뉴>");
-        for (Order order : orders) {
-            System.out.printf("%s %d개\n", order.getOrderMenu().getMenuName(), order.getQuantity());
-        }
+
+        orders.stream().forEach(order -> System.out.printf("%s %d개\n", order.getOrderMenu().getMenuName(), order.getQuantity()));
     }
 
     public void printBeforeBenefitAffect(int amount) {
