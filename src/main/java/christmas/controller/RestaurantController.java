@@ -5,6 +5,7 @@ import static christmas.domain.model.Badge.awardBadge;
 import christmas.domain.model.Badge;
 import christmas.domain.model.Event;
 import christmas.domain.model.Order;
+import christmas.domain.model.OrderLine;
 import christmas.service.EventService;
 import christmas.service.OrderService;
 import christmas.util.input.InputFactory;
@@ -13,8 +14,8 @@ import christmas.util.validator.DateValidator;
 import christmas.util.validator.IntegerValidator;
 import christmas.view.InputView;
 import christmas.view.OutputView;
-import java.util.ArrayList;
-import java.util.List;
+
+import java.util.*;
 
 public class RestaurantController {
     private final InputFactory inputFactory = new InputFactory(new InputView());
@@ -65,7 +66,28 @@ public class RestaurantController {
         while(true){
             try {
                 outputView.printTakeOrder();
-                List<String> order = orderService.splitOrderSentence(stringReader.read());
+                List<String> order = orderService.splitOrderSentence(stringReader.read()); //주문 묶음 나누기
+                // 메뉴/수량 나누기
+                List<OrderLine> lines = new ArrayList<>();
+                for (int i = 0; i < order.size(); i++) {
+                    String[] parts = order.get(i).split("-");
+                    lines.add(new OrderLine(parts[0], Integer.parseInt(parts[1]))); //add 횟수 == result.size()
+                }
+
+                // 같은 메뉴끼리 수량 합치기
+                Map<String, Integer> menuToQty = new LinkedHashMap<>();
+                for (OrderLine line : lines) {
+                    String menuName = line.getName();
+                    int qty = line.getQty();
+                    menuToQty.merge(menuName, qty, Integer::sum);
+                }
+
+                //다시 List<OrderLine>로 변환
+                List<String> merged = new ArrayList<>();
+                for (Map.Entry<String, Integer> entry : menuToQty.entrySet()) {
+                    merged.add(new OrderLine(entry.getKey(), entry.getValue()));
+                }
+
                 orders = orderService.confirmVerifiedOrder(order);
                 break;
             } catch (IllegalArgumentException e) {
