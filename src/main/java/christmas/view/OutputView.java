@@ -49,9 +49,7 @@ public class OutputView {
             System.out.println("없음");
         }
         if(!benefitList.isEmpty()){
-            for(Event event : benefitList){
-                System.out.printf("%s : -%d원\n", event.getEventName().getName(), event.getBenefitPrice());
-            }
+            benefitList.stream().forEach(event -> System.out.printf("%s : -%d원\n", event.getEventName().getName(), event.getBenefitPrice()));
         }
     }
 
