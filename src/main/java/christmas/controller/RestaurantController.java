@@ -68,25 +68,7 @@ public class RestaurantController {
                 outputView.printTakeOrder();
                 List<String> order = orderService.splitOrderSentence(stringReader.read()); //주문 묶음 나누기
                 // 메뉴/수량 나누기
-                List<OrderLine> lines = new ArrayList<>();
-                for (int i = 0; i < order.size(); i++) {
-                    String[] parts = order.get(i).split("-");
-                    lines.add(new OrderLine(parts[0], Integer.parseInt(parts[1]))); //add 횟수 == result.size()
-                }
 
-                // 같은 메뉴끼리 수량 합치기
-                Map<String, Integer> menuToQty = new LinkedHashMap<>();
-                for (OrderLine line : lines) {
-                    String menuName = line.getName();
-                    int qty = line.getQty();
-                    menuToQty.merge(menuName, qty, Integer::sum);
-                }
-
-                //다시 List<OrderLine>로 변환
-                List<String> merged = new ArrayList<>();
-                for (Map.Entry<String, Integer> entry : menuToQty.entrySet()) {
-                    merged.add(new OrderLine(entry.getKey(), entry.getValue()));
-                }
 
                 orders = orderService.confirmVerifiedOrder(order);
                 break;
