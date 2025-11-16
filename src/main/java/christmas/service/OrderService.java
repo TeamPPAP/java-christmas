@@ -32,10 +32,10 @@ public class OrderService {
         return orders;
     }
 
-    public List<Order> convertStringToMenu(List<String> orderList) {
+    public List<Order> convertStringToMenu(List<OrderLine> merged) {
         Map<String, Menu> menuMap = menuService.getAllMenu().stream()
                 .collect(Collectors.toMap(Menu::getMenuName, Function.identity()));
-        return orderList.stream().map(order -> createOrderFrom(order, menuMap)).toList();
+        return merged.stream().map(order -> createOrderFrom(order, menuMap)).toList();
     }
 
     private Order createOrderFrom(String orderString, Map<String, Menu> menuMap) {
@@ -71,12 +71,7 @@ public class OrderService {
         }
 
         // OrderLine -> Order(추후 리팩터링)
-        List<String> struiconvertOrderLinesToOrders(merged);
-
-
-
-
-        List<Order> orders = convertStringToMenu(orderList);
+        List<Order> orders = convertStringToMenu(merged);
 
         orderValidator.isOderListEmpty(orders);
         orderValidator.existMenuName(orders,menuService.getAllMenu());
@@ -87,7 +82,7 @@ public class OrderService {
         return orders;
     }
 
-    public List<String> convertOrderLinesToOrders (OrderLine merged) {
-        (new Order (merged.getName(), merged.getQty())
+    public List<String> convertOrderLinesToOrders (List<OrderLine> merged) {
+        return
     }
 }
