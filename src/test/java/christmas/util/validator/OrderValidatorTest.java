@@ -19,7 +19,8 @@ class OrderValidatorTest {
     }
 
     @Test
-    void existMenuName() {
+    void existMenuName() { // 없는 메뉴 테스트
+
     }
 
     @Test
