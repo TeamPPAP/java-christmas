@@ -66,10 +66,9 @@ public class RestaurantController {
         while(true){
             try {
                 outputView.printTakeOrder();
-                List<String> order = orderService.splitOrderSentence(stringReader.read()); //주문 묶음 나누기
+                //주문 묶음 나누기
+                List<String> order = orderService.splitOrderSentence(stringReader.read());
                 // 메뉴/수량 나누기
-
-
                 orders = orderService.confirmVerifiedOrder(order);
                 break;
             } catch (IllegalArgumentException e) {

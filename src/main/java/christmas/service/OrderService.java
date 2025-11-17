@@ -38,25 +38,25 @@ public class OrderService {
         return merged.stream().map(order -> createOrderFrom(order, menuMap)).toList();
     }
 
-    private Order createOrderFrom(String orderString, Map<String, Menu> menuMap) {
-        String[] parts = orderString.split("-");
-
-        String menuName = parts[0];
+    private Order createOrderFrom(OrderLine order, Map<String, Menu> menuMap) {
+        String menuName = order.getName();
         Menu menu = menuMap.get(menuName);
 
-        int quantity = Integer.parseInt(parts[1]);
+        int quantity = order.getQty();
         return new Order(menu, quantity);
     }
 
     public List<Order> confirmVerifiedOrder(List<String> orderList) throws IllegalArgumentException {
 
+        // OrderLine[0] 티본스테이크, 1
+        // OrderLine[1] 티본스테이크, 1
         List<OrderLine> lines = new ArrayList<>();
         for (int i = 0; i < orderList.size(); i++) {
             String[] parts = orderList.get(i).split("-");
             lines.add(new OrderLine(parts[0], Integer.parseInt(parts[1]))); //add 횟수 == result.size()
         }
 
-        // 같은 메뉴끼리 수량 합치기
+        // 같은 메뉴끼리 수량 합치기 티본스테이크, 2
         Map<String, Integer> menuToQty = new LinkedHashMap<>();
         for (OrderLine line : lines) {
             String menuName = line.getName();
@@ -69,8 +69,8 @@ public class OrderService {
         for (Map.Entry<String, Integer> entry : menuToQty.entrySet()) {
             merged.add(new OrderLine(entry.getKey(), entry.getValue()));
         }
+        System.out.println(merged.size()); //1  티본스테이크, 2 일것
 
-        // OrderLine -> Order(추후 리팩터링)
         List<Order> orders = convertStringToMenu(merged);
 
         orderValidator.isOderListEmpty(orders);
@@ -80,9 +80,5 @@ public class OrderService {
         orderValidator.totalCountWithinLimit(orderList);
 
         return orders;
-    }
-
-    public List<String> convertOrderLinesToOrders (List<OrderLine> merged) {
-        return
     }
 }
