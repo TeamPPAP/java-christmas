@@ -32,7 +32,7 @@ public class OrderService {
         return orders;
     }
 
-    public List<Order> convertStringToMenu(List<OrderLine> merged) {
+    public List<Order> convertToOrders(List<OrderLine> merged) {
         Map<String, Menu> menuMap = menuService.getAllMenu().stream()
                 .collect(Collectors.toMap(Menu::getMenuName, Function.identity()));
         return merged.stream().map(order -> createOrderFrom(order, menuMap)).toList();
@@ -47,31 +47,11 @@ public class OrderService {
     }
 
     public List<Order> confirmVerifiedOrder(List<String> orderList) throws IllegalArgumentException {
+        List<OrderLine> lines = parseOrderLines(orderList);
 
-        // OrderLine[0] 티본스테이크, 1
-        // OrderLine[1] 티본스테이크, 1
-        List<OrderLine> lines = new ArrayList<>();
-        for (int i = 0; i < orderList.size(); i++) {
-            String[] parts = orderList.get(i).split("-");
-            lines.add(new OrderLine(parts[0], Integer.parseInt(parts[1]))); //add 횟수 == result.size()
-        }
+        List<OrderLine> merged = mergeSameMenu(lines);
 
-        // 같은 메뉴끼리 수량 합치기 티본스테이크, 2
-        Map<String, Integer> menuToQty = new LinkedHashMap<>();
-        for (OrderLine line : lines) {
-            String menuName = line.getName();
-            int qty = line.getQty();
-            menuToQty.merge(menuName, qty, Integer::sum);
-        }
-
-        //다시 List<OrderLine>로 변환
-        List<OrderLine> merged = new ArrayList<>();
-        for (Map.Entry<String, Integer> entry : menuToQty.entrySet()) {
-            merged.add(new OrderLine(entry.getKey(), entry.getValue()));
-        }
-        System.out.println(merged.size()); //1  티본스테이크, 2 일것
-
-        List<Order> orders = convertStringToMenu(merged);
+        List<Order> orders = convertToOrders(merged);
 
         orderValidator.isOderListEmpty(orders);
         orderValidator.existMenuName(orders,menuService.getAllMenu());
@@ -80,5 +60,28 @@ public class OrderService {
         orderValidator.totalCountWithinLimit(orderList);
 
         return orders;
+    }
+
+    private List<OrderLine> parseOrderLines(List<String> orderList) {
+        List<OrderLine> lines = new ArrayList<>();
+        for (int i = 0; i < orderList.size(); i++) {
+            String[] parts = orderList.get(i).split("-");
+            lines.add(new OrderLine(parts[0], Integer.parseInt(parts[1]))); //add 횟수 == result.size()
+        }
+        return lines;
+    }
+
+    private List<OrderLine> mergeSameMenu(List<OrderLine> lines) {
+        Map<String, Integer> menuToQty = new LinkedHashMap<>();
+        for (OrderLine line : lines) {
+            String menuName = line.getName();
+            int qty = line.getQty();
+            menuToQty.merge(menuName, qty, Integer::sum);
+        }
+        List<OrderLine> merged = new ArrayList<>();
+        for (Map.Entry<String, Integer> entry : menuToQty.entrySet()) {
+            merged.add(new OrderLine(entry.getKey(), entry.getValue()));
+        }
+        return merged;
     }
 }
